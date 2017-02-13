@@ -75,7 +75,7 @@
           </span>
           <!-- Add spacer, to align navigation to the right in desktop -->
           <div class="android-header-spacer mdl-layout-spacer"></div>
-          
+
           <!-- Navigation -->
           <div class="android-navigation-container">
             <nav class="android-navigation mdl-navigation">
@@ -100,14 +100,14 @@
           <div class="android-drawer-separator"></div>
           <a class="mdl-navigation__link" href="">Resources</a>
           <a class="mdl-navigation__link" href="">Twitter</a>
-          
+
 
         </nav>
       </div>
 
       <div class="android-content mdl-layout__content">
         <a name="top"></a>
-        
+
         <div id="content">
           <!--<div id="header">
             <img align="left" src="logo.png" width="60" height="60">
@@ -121,7 +121,7 @@
           </div>
         </div>
 
-        
+
       </div>
     </div>
     <script src="lib/material.min.js"></script>
@@ -249,9 +249,9 @@
         Blockly.svgResize(workspace);
       };
       window.addEventListener('resize', onresize, false);
-      
+
       setInterval(onresize, 100);
- 
+
       function openCode() {
         var fileInput = document.createElement('input');
         fileInput.type = 'file';
@@ -288,7 +288,18 @@
       function sendCode() {
         var code = encodeURIComponent(Blockly.Python.workspaceToCode());
         var xhttp = new XMLHttpRequest();
-        xhttp.open("POST", "http://127.0.0.1:8080/runcode", true);
+
+        var postUrl;
+
+        if (location.protocol === 'file:') {
+          postUrl = "http://127.0.0.1:8080/runcode";
+        }
+
+        if (location.protocol === 'http:') {
+          postUrl = "/runcode";
+        }
+
+        xhttp.open("POST", postUrl, true);
         xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
         xhttp.send("code=" + code);
       }
