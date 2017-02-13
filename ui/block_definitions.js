@@ -368,7 +368,7 @@ Blockly.Blocks['define'] = {
         .appendField("):");
     this.appendStatementInput("DO")
         .setCheck(null);
-    this.setPreviousStatement(true, null);  
+    this.setPreviousStatement(true, null);
     this.setNextStatement(true, null);
     this.setColour(336)
     this.setTooltip('');
@@ -973,7 +973,7 @@ Blockly.Blocks['buildpumpkin'] = {
 Blockly.Blocks['getdist'] = {
   init: function() {
     this.appendDummyInput()
-        .appendField("getDistance(")
+        .appendField("distance_to_player(")
         .appendField(new Blockly.FieldNumber(0), "x")
         .appendField(", ")
         .appendField(new Blockly.FieldNumber(0), "y")

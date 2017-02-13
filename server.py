@@ -5,6 +5,7 @@ import os
 app = Bottle()
 
 blockly_root = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'ui')
+support_file_path =  os.path.join(os.path.dirname(os.path.abspath(__file__)), 'runtime_support.py')
 
 # the decorator
 def enable_cors(fn):
@@ -22,10 +23,13 @@ def enable_cors(fn):
 
 @post('/runcode')
 @enable_cors
-def do_login():
+def runcode():
+    support_file = open(support_file_path,'r')
+    support_code = support_file.read()
+
     codeToRun = request.forms.get('code')
     print(codeToRun)
-    exec(codeToRun)
+    exec(support_code + codeToRun)
 
 @route('/<filepath:path>')
 def mainPage(filepath):

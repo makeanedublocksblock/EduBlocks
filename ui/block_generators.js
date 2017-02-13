@@ -336,7 +336,7 @@ Blockly.Python['mcpost'] = function(block) {
   // TODO: Assemble Python into code variable.
   var code = 'mc.postToChat("' + text_chat + '")\n';
   return code;
-}; 
+};
 
 Blockly.Python['print'] = function(block) {
   var text_print = block.getFieldValue('print');
@@ -500,7 +500,7 @@ Blockly.Python['getdist'] = function(block) {
   var number_y = block.getFieldValue('y');
   var number_z = block.getFieldValue('z');
   // TODO: Assemble Python into code variable.
-  var code = 'getDistance(' + number_x + ', ' + number_y + ', ' + number_z + ')\n';
+  var code = 'distance_to_player(' + number_x + ', ' + number_y + ', ' + number_z + ')\n';
   return code;
 };
 
