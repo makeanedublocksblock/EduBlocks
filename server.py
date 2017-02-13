@@ -3,7 +3,7 @@ import os
 
 app = Bottle()
 
-blockly_root = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'blockly')
+blockly_root = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'ui')
 
 @app.hook('after_request')
 def enable_cors():
