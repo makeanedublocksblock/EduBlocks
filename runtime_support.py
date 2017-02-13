@@ -1,5 +1,5 @@
 def distance_to_player(x, y, z):
-  global mc
+  global mc, math
   pp = mc.player.getPos()
   xd = x - pp.x
   yd = y - pp.y
