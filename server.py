@@ -1,19 +1,9 @@
 from bottle import *
 import os
-import threading
 
 app = Bottle()
 
-ui_root = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'ui')
-
-codeToRun = ''
-thread = None
-
-def worker():
-    global codeToRun
-
-    print(codeToRun)
-    exec(codeToRun)
+blockly_root = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'blockly')
 
 @app.hook('after_request')
 def enable_cors():
@@ -23,30 +13,22 @@ def enable_cors():
     response.headers['Access-Control-Allow-Headers'] = 'Origin, Accept, Content-Type, X-Requested-With, X-CSRF-Token'
 
 @post('/runcode')
-def runcode():
-    global codeToRun, thread
-
+def do_login():
     codeToRun = request.forms.get('code')
-
-    # if thread != None:
-    #     thread.stop()
-
-    thread = threading.Thread(target=worker)
-    thread.daemon = True  # thread dies when main thread (only non-daemon thread) exits.
-    thread.start()
-    return codeToRun
+    print(codeToRun)
+    exec(codeToRun)
 
 @route('/<filepath:path>')
 def mainPage(filepath):
     print(filepath)
-    return static_file(filepath, root=ui_root)
+    return static_file(filepath, root=blockly_root)
 
 @route('/')
 def mainPage():
     filepath = "index.html"
-    return static_file(filepath, root=ui_root)
+    return static_file(filepath, root=blockly_root)
 
-run(host='0.0.0.0', port=8080, server='cherrypy')
+run(host='', port=8080)
 
 
 

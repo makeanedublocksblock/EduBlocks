@@ -1,9 +1,10 @@
 [Desktop Entry]
-Version=1.0.1
+Version=1.1.0
 Name=EduBlocks
 Comment=Making the transition from Scratch to Python easier.
-Exec=sudo ./EduBlocks/test.sh
+Exec=bash ./edublocks/test.sh
 Icon=/usr/share/icons/hicolor/scalable/apps/logo.png
 Terminal=true
 Type=Application
-Categories=Application;
+Categories=Development
+

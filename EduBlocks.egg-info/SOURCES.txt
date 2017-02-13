@@ -1,0 +1,10 @@
+CHANGELOG.txt
+LICENCE.txt
+MANIFEST.in
+README.txt
+setup.py
+EduBlocks.egg-info/PKG-INFO
+EduBlocks.egg-info/SOURCES.txt
+EduBlocks.egg-info/dependency_links.txt
+EduBlocks.egg-info/requires.txt
+EduBlocks.egg-info/top_level.txt

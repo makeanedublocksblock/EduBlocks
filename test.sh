@@ -1,7 +1,11 @@
 #!/bin/bash
-sudo epiphany --new-tab  file:///home/$SUDO_USER/EduBlocks/ui/index.html > /dev/null 2>&1 &
 
-sudo python3 ./EduBlocks/server.py 
+2>/dev/null 1>&2 sensible-browser file:///home/pi/edublocks/ui/index.html &
+
+
+sudo python3 ./edublocks/server.py 
+
+
 
 
 

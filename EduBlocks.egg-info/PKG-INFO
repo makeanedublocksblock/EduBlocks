@@ -1,0 +1,33 @@
+Metadata-Version: 1.1
+Name: EduBlocks
+Version: 0.0.1
+Summary: Making the transition from Scratch to Python easier
+Home-page: http://edupython.co.uk
+Author: All About Code
+Author-email: info@edupython.co.uk
+License: MIT
+Description: EduBlocks is a block-based program that uses the Google blockly API to allow
+        children to make an easy transition from Scratch to Python. Created by the
+        same people as EduPython. It currently includes 2 Python librarys. One is
+        EduPython allowing you to control the GPIO and the other is MCPI to
+        interact with minecraft.
+        Website & Docs:
+        http://edupython.co.uk
+        
+        
+        Change Log
+        ==========
+        
+        0.0.1 (12/10/2016)
+        ------------------
+        - First release on PIP
+        
+Keywords: EduBlocks,Transition,Bottle,Blockly,Minecraft,EduPy
+Platform: UNKNOWN
+Classifier: Environment :: Web Environment
+Classifier: Development Status :: 4 - Beta
+Classifier: Intended Audience :: Education
+Classifier: Operating System :: POSIX :: Linux
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3
