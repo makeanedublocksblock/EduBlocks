@@ -231,6 +231,7 @@
         media: 'blockly/media/',
         toolbox: document.getElementById('toolbox')
       });
+      
       var onresize = function(e) {
         // Compute the absolute coordinates and dimensions of blocklyArea.
         var element = blocklyArea;
@@ -250,7 +251,7 @@
       };
       window.addEventListener('resize', onresize, false);
 
-      setTimeout(onresize, 250);
+      setTimeout(onresize, 400);
 
       function openCode() {
         var fileInput = document.createElement('input');
