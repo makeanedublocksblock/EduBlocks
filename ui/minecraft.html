@@ -217,7 +217,7 @@
     </category>
 
 
-    </xml>
+     </xml>
 
     <!-- The script to add blockly to the page. It's a little more complicated
     than the standard blockly one as it makes the blockly div resize as the page
@@ -229,6 +229,7 @@
         media: 'blockly/media/',
         toolbox: document.getElementById('toolbox')
       });
+      
       var onresize = function(e) {
         // Compute the absolute coordinates and dimensions of blocklyArea.
         var element = blocklyArea;
@@ -247,9 +248,9 @@
         Blockly.svgResize(workspace);
       };
       window.addEventListener('resize', onresize, false);
-      
-      setInterval(onresize, 100);
- 
+
+      setTimeout(onresize, 400);
+
       function openCode() {
         var fileInput = document.createElement('input');
         fileInput.type = 'file';
@@ -286,7 +287,18 @@
       function sendCode() {
         var code = encodeURIComponent(Blockly.Python.workspaceToCode());
         var xhttp = new XMLHttpRequest();
-        xhttp.open("POST", "/runcode", true);
+
+        var postUrl;
+
+        if (location.protocol === 'file:') {
+          postUrl = "http://127.0.0.1:8080/runcode";
+        }
+
+        if (location.protocol === 'http:') {
+          postUrl = "/runcode";
+        }
+
+        xhttp.open("POST", postUrl, true);
         xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
         xhttp.send("code=" + code);
       }
