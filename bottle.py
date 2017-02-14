@@ -3508,11 +3508,11 @@ def run(app=None,
         server.quiet = server.quiet or quiet
         try:
             if not server.quiet:
-                _stderr("EduBlocks DEV 'Sahara'\n\n") 
+                _stderr("EduBlocks BETA 'Slate'\n\n") 
                         
                 _stderr("Output Window\n\n") 
                         
-                _stderr("Hit Ctrl-C to quit.\n\n")
+                _stderr("Hit Ctrl-C to stop current code.\n\n")
 
         except KeyboardInterrupt:
             print("Exiting")
