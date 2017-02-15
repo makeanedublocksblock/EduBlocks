@@ -1,9 +1,6 @@
-Install
-=======
+<img src="ui/logo.png>
 
-    python -m pip install cherrypy
+EduBlocks
+=========
 
-Running
-=======
-
-    python server.py
+Description coming soon!
