@@ -108,6 +108,29 @@ a img{
     font-size: 14px;
   }
 
+  .space-header {
+  overflow: visible;
+  background-color: white;
+  background-image: url("images/space.jpg");
+}
+
+  .space-header .material-icons {
+    color: white !important;
+  }
+
+  .space-header .mdl-layout__drawer-button {
+    background: transparent;
+    color: white;
+  }
+
+  .space-header .mdl-navigation__link {
+    color: white;
+    font-weight: 700;
+    font-size: 14px;
+  }
+
+  
+
 .circuit-header {
   overflow: visible;
   background-color: white;
