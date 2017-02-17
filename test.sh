@@ -1,11 +1,9 @@
 #!/bin/bash
 
-2>/dev/null 1>&2 sensible-browser file:///home/pi/edublocks/ui/index.html &
+# 2>/dev/null 1>&2 sensible-browser file:///home/pi/edublocks/ui/index.html &
 
+cd ~/edublocks/ui
+npm start
 
-sudo python3 ./edublocks/server.py 
-
-
-
-
-
+cd ~
+sudo python3 ~/edublocks/server.py
