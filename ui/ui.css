@@ -24,12 +24,12 @@ a img{
 }
 
 ::-moz-selection {
-  background-color: #6ab344;
+  background-color: #FF0066;
   color: #fff;
 }
 
 ::selection {
-  background-color: #6ab344;
+  background-color: #FF0066;
   color: #fff;
 }
 
