@@ -20,6 +20,10 @@ function getElectronIo() {
   function saveFile(text) {
     const path = dialog.showSaveDialog({ filters: [{ name: 'EduBlocks XML', extensions: ['xml'] }] });
 
+    if (!path) {
+      return;
+    }
+
     const buffer = new Buffer(text, 'utf8');
 
     return new Promise((resolve, reject) => {

@@ -63,7 +63,7 @@
     <script src="block_definitions.js"></script>
 
     <script src="lib/FileSaver.js"></script>
-
+    <script src="io.js"></script>
   </head>
   <body>
     <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
@@ -292,8 +292,8 @@
         var xml = Blockly.Xml.workspaceToDom(Blockly.mainWorkspace);
         var text = Blockly.Xml.domToPrettyText(xml);
 
-        var blob = new Blob([text], { type: 'text/xml;charset=utf-8' });
-        saveAs(blob, prompt('Enter filename...'));
+        const io = getIo();
+        io.saveFile(text);
       }
 
       function sendCode() {
