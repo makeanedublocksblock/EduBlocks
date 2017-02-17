@@ -13,7 +13,7 @@ let mainWindow
 
 function createWindow() {
   // Create the browser window.
-  mainWindow = new BrowserWindow({ width: 1024, height: 768 })
+  mainWindow = new BrowserWindow({ width: 1024, height: 768, icon: __dirname + 'logo.png'})
 
   mainWindow.maximize();
 
