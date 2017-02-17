@@ -68,7 +68,7 @@
   <body>
     <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
 
-      <div class="android-header mdl-layout__header mdl-layout__header--waterfall">
+      <div id="header" class="android-header mdl-layout__header mdl-layout__header--waterfall">
         <div class="mdl-layout__header-row">
           <span class="android-title mdl-layout-title">
             <img height="40" width="40" src="logo.png">
@@ -93,10 +93,10 @@
         </span>
         <nav class="mdl-navigation">
           <span class="mdl-navigation__link" href="">Themes</span>
-          <a class="mdl-navigation__link" href="index.html">Default</a>
-          <a class="mdl-navigation__link" href="minecraft.html">Minecraft</a>
-          <a class="mdl-navigation__link" href="circuit.html">Circuit</a>
-          <a class="mdl-navigation__link" href="slate.html">Slate UI Signature</a>
+          <a class="mdl-navigation__link" href="javascript:void(0)" onclick="changeTheme('android')">Default</a>
+          <a class="mdl-navigation__link" href="javascript:void(0)" onclick="changeTheme('minecraft')">Minecraft</a>
+          <a class="mdl-navigation__link" href="javascript:void(0)" onclick="changeTheme('circuit')">Circuit</a>
+          <a class="mdl-navigation__link" href="javascript:void(0)" onclick="changeTheme('slate')">Slate UI Signature</a>
           <div class="android-drawer-separator"></div>
           <a class="mdl-navigation__link" href="">Resources</a>
           <a class="mdl-navigation__link" href="">Twitter</a>
@@ -255,6 +255,12 @@
       setTimeout(onresize, 400);
       setTimeout(onresize, 1000);
       setTimeout(onresize, 5000);
+
+      function changeTheme(themeName) {
+        var header = document.getElementById('header');
+        var classNames = header.className.replace(/[a-z]+\-header\ /, '');
+        header.className = classNames + ' ' + themeName + '-header';
+      }
 
       function openCode() {
         var fileInput = document.createElement('input');
