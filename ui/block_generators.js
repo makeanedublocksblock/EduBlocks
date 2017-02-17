@@ -18,7 +18,7 @@ Blockly.Python['senseinit'] = function(block) {
 Blockly.Python['senseshow'] = function(block) {
   var text_text = block.getFieldValue('text');
   // TODO: Assemble Python into code variable.
-  var code = '"sense.show_message("' +text_text+ '")\n';
+  var code = 'sense.show_message("' +text_text+ '")\n';
   return code;
 };
 
