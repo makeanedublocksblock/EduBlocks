@@ -3,6 +3,25 @@ Blockly.Python['import_edupy'] = function(block) {
   return code;
 };
 
+Blockly.Python['import_sense'] = function(block) {
+  // TODO: Assemble Python into code variable.
+  var code = 'from sense_hat import SenseHat\n';
+  return code;
+};
+
+Blockly.Python['senseinit'] = function(block) {
+  // TODO: Assemble Python into code variable.
+  var code = 'sense = SenseHat()\n';
+  return code;
+};
+
+Blockly.Python['senseshow'] = function(block) {
+  var text_text = block.getFieldValue('text');
+  // TODO: Assemble Python into code variable.
+  var code = '"sense.show_message("' +text_text+ '")\n';
+  return code;
+};
+
 Blockly.Python['import_block'] = function(block) {
   var code = 'from mcpi import block\n';
   return code;

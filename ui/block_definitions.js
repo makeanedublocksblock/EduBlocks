@@ -1032,5 +1032,43 @@ Blockly.Blocks['cameraset'] = {
   }
 };
 
+Blockly.Blocks['import_sense'] = {
+  init: function() {
+    this.appendDummyInput()
+        .appendField("from sense_hat import SenseHat");
+    this.setPreviousStatement(true, null);
+    this.setNextStatement(true, null);
+    this.setColour(180);
+    this.setTooltip('Imports the Sense Hat library');
+    this.setHelpUrl('');
+  }
+};
+
+Blockly.Blocks['senseshow'] = {
+  init: function() {
+    this.appendDummyInput()
+        .appendField("sense.show_message(\"")
+        .appendField(new Blockly.FieldTextInput("Text Here"), "text")
+        .appendField("\")");
+    this.setPreviousStatement(true, null);
+    this.setNextStatement(true, null);
+    this.setColour(180);
+    this.setTooltip('Imports the Sense Hat library');
+    this.setHelpUrl('');
+  }
+};
+
+Blockly.Blocks['senseinit'] = {
+  init: function() {
+    this.appendDummyInput()
+        .appendField("sense = SenseHat()");
+    this.setPreviousStatement(true, null);
+    this.setNextStatement(true, null);
+    this.setColour(180);
+    this.setTooltip('Detects the sense hat');
+    this.setHelpUrl('');
+  }
+};
+
 
 
