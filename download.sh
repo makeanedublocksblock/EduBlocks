@@ -13,7 +13,8 @@ then
     git clone $REPOSRC $LOCALREPO
 else
     cd $LOCALREPO
-    git pull $REPOSRC
+    git reset --hard HEAD
+    git pull --force $REPOSRC
 fi
 
 cd $LOCALREPO
