@@ -14,11 +14,11 @@ if (whiptail --title "EduBlocks Installer" --yesno "Welcome to the EduBlocks ins
         echo "Downloading the package"
         git clone https://github.com/AllAboutCode/edublocks
         echo "Copying the desktop shortcut to your desktop"
-        sudo cp edublocks.desktop ./Desktop
+        sudo cp edublocks/edublocks.desktop ./Desktop
         echo "Copying the icon."
-        sudo cp /ui/logo.png /usr/share/icons/hicolor/scalable/apps/logo.png
+        sudo cp edublocks/ui/logo.png /usr/share/icons/hicolor/scalable/apps/logo.png
         echo "Making the program visable in the menu."
-        sudo cp edublocks.desktop /usr/share/applications
+        sudo cp edublocks/edublocks.desktop /usr/share/applications
         echo "Downloading the edupy library"
         sudo pip3 install edupy
         echo "Install Node.JS"
