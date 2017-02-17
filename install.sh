@@ -21,6 +21,13 @@ if (whiptail --title "EduBlocks Installer" --yesno "Welcome to the EduBlocks ins
         sudo cp edublocks.desktop /usr/share/applications
         echo "Downloading the edupy library"
         sudo pip3 install edupy
+        echo "Install Node.JS"
+        curl -sL https://deb.nodesource.com/setup_7.x | sudo -E bash -
+        sudo apt install nodejs
+        echo "Installing NPM dependencies"
+        cd edublocks/ui
+        npm install
+        cd ../../
     else
         echo "User selected Cancel."
     fi
