@@ -12,7 +12,7 @@ if (whiptail --title "EduBlocks Installer" --yesno "Welcome to the EduBlocks ins
         echo "User selected Ok and entered " $PASSWORD
         echo "(Exit status was $exitstatus)"
         echo "Copying the desktop shortcut to your desktop"
-        sudo cp ./edublocks/edublocks.desktop ./Desktop
+        sudo cp edublocks.desktop ./Desktop
         echo "Copying the icon."
         sudo cp ui/logo.png /usr/share/icons/hicolor/scalable/apps/logo.png
         echo "Making the program visable in the menu."
