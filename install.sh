@@ -11,23 +11,21 @@ if (whiptail --title "EduBlocks Installer" --yesno "Welcome to the EduBlocks ins
     if [ $exitstatus = 0 ]; then
         echo "User selected Ok and entered " $PASSWORD
         echo "(Exit status was $exitstatus)"
-        echo "Downloading the package"
-        git clone https://github.com/AllAboutCode/edublocks
         echo "Copying the desktop shortcut to your desktop"
-        sudo cp edublocks/edublocks.desktop ./Desktop
+        sudo cp edublocks.desktop ./Desktop
         echo "Copying the icon."
-        sudo cp edublocks/ui/logo.png /usr/share/icons/hicolor/scalable/apps/logo.png
+        sudo cp ui/logo.png /usr/share/icons/hicolor/scalable/apps/logo.png
         echo "Making the program visable in the menu."
-        sudo cp edublocks/edublocks.desktop /usr/share/applications
+        sudo cp edublocks.desktop /usr/share/applications
         echo "Downloading the edupy library"
         sudo pip3 install edupy
         echo "Install Node.JS"
         curl -sL https://deb.nodesource.com/setup_7.x | sudo -E bash -
         sudo apt install nodejs
         echo "Installing NPM dependencies"
-        cd edublocks/ui
+        cd ui
         npm install
-        cd ../../
+        cd ../
     else
         echo "User selected Cancel."
     fi
