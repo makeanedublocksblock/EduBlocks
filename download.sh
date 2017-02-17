@@ -18,3 +18,4 @@ fi
 
 cd $LOCALREPO
 bash ./install.sh
+
