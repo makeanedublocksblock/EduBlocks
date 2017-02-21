@@ -116,10 +116,7 @@
             <input align="right" type="image" onclick="saveCode()" src="save.gif" alt="Save" width=60 height="60">
             <input align="right" type="image" onclick="openCode()" src="open.gif" alt="Open" width=60 height="60">
           </div>-->
-          <div id="blockly">
-            <div id="blocklyArea"></div>
-            <div id="blocklyDiv" style="position: absolute"></div>
-          </div>
+          <div id="blockly"></div>
         </div>
 
 
@@ -231,36 +228,24 @@
     than the standard blockly one as it makes the blockly div resize as the page
     is resized, rather than being a fixed size. -->
     <script>
-      var blocklyArea = document.getElementById('blocklyArea');
-      var blocklyDiv = document.getElementById('blocklyDiv');
-      var workspace = Blockly.inject(blocklyDiv,{
-        media: 'blockly/media/',
-        toolbox: document.getElementById('toolbox')
-      });
-
-      var onresize = function(e) {
-        // Compute the absolute coordinates and dimensions of blocklyArea.
-        var element = blocklyArea;
-        var x = 0;
-        var y = 0;
-        do {
-          x += element.offsetLeft;
-          y += element.offsetTop;
-          element = element.offsetParent;
-        } while (element);
-        // Position blocklyDiv over blocklyArea.
-        blocklyDiv.style.left = x + 'px';
-        blocklyDiv.style.top = (y  - 64) + 'px';
-        blocklyDiv.style.width = blocklyArea.offsetWidth + 'px';
-        blocklyDiv.style.height = (blocklyArea.offsetHeight + 96) + 'px';
-        Blockly.svgResize(workspace);
-      };
+      window.addEventListener('load', initBlockly);
       window.addEventListener('resize', onresize, false);
 
-      setTimeout(onresize, 100);
-      setTimeout(onresize, 400);
-      setTimeout(onresize, 1000);
-      setTimeout(onresize, 5000);
+      var blockly = document.getElementById('blockly');
+      var workspace;
+
+      function initBlockly() {
+        workspace = Blockly.inject(blockly,{
+          media: 'blockly/media/',
+          toolbox: document.getElementById('toolbox')
+        });
+
+        onresize();
+      }
+
+      function onresize(e) {
+        Blockly.svgResize(workspace);
+      }
 
       function changeTheme(themeName) {
         var header = document.getElementById('header');

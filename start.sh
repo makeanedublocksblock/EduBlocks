@@ -5,5 +5,5 @@
 cd ~/edublocks/ui
 2>/dev/null 1>&2 npm start &
 
-cd ~
-sudo python3 ~/edublocks/server.py
+cd ~/edublocks/server
+npm start

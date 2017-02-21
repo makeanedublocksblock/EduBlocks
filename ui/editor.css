@@ -13,7 +13,7 @@ body {
 }
 #blockly {
   width: 100%;
-  height: calc(100% - 60px - 40px); /* the whole page minus the height of the header, minus the height of the footer*/
+  height: 100%;
   background-color: green;
 }
 #footer {
