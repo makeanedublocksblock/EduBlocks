@@ -26,5 +26,5 @@ def buildPumpkin(x, y, z):
 
   mc.setBlocks(x+2, y-1, z+1, x+2, y-1, z-1, 0, 0)
   mc.setBlock(x, y+3, z, 35, 5)
-  
 
+print('Starting...')

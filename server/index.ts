@@ -8,6 +8,7 @@ import bodyParser = require('body-parser');
 import { Readable } from 'stream';
 
 const ui = path.join(__dirname, '..', 'ui');
+const runtimeSupportPath = path.join(__dirname, '..', 'runtime_support.py');
 const scriptPath = path.join(__dirname, '..', 'tmp', 'output.py');
 
 const app = express();
@@ -25,7 +26,9 @@ let inputFeed: (inp: string) => void;
 app.post('/runcode', (req, res) => {
   const { code } = req.body;
 
-  fs.writeFileSync(scriptPath, code);
+  const runtimeSupport = fs.readFileSync(runtimeSupportPath);
+
+  fs.writeFileSync(scriptPath, runtimeSupport + code);
 
   // Kill the last process if it is still running...
   if (proc) {
