@@ -348,7 +348,7 @@
         var code = encodeURIComponent(Blockly.Python.workspaceToCode());
         var xhttp = new XMLHttpRequest();
 
-        var postUrl = getHost() + '/runcode';
+        var postUrl = 'http://' + getHost() + '/runcode';
 
         xhttp.open("POST", postUrl, true);
         xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
