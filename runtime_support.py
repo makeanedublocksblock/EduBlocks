@@ -1,3 +1,5 @@
+import time
+
 def distance_to_player(x, y, z):
   global mc, math
   pp = mc.player.getPos()
@@ -26,5 +28,13 @@ def buildPumpkin(x, y, z):
 
   mc.setBlocks(x+2, y-1, z+1, x+2, y-1, z-1, 0, 0)
   mc.setBlock(x, y+3, z, 35, 5)
+
+old_print = print
+
+# Overload print so that we can't hammer the standard output.
+# Print is limited to 1 line every 10 seconds.
+def print(*args):
+  old_print(*args)
+  time.sleep(0.10)
 
 print('Starting...')
