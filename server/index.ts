@@ -18,15 +18,12 @@ app.use(bodyParser.urlencoded({ extended: true }));
 expressWs(app);
 
 let lineReporter: (msg: string) => void;
+let inputFeed: (inp: string) => void;
 
 app.post('/runcode', (req, res) => {
   const { code } = req.body;
 
   fs.writeFileSync(scriptPath, code);
-
-  const s = new Readable();
-  s.push(code);
-  s.push(null);
 
   const proc = spawn('python3', ['-u', scriptPath], { stdio: ['pipe', 'pipe', 'pipe'] });
 
@@ -37,7 +34,7 @@ app.post('/runcode', (req, res) => {
   });
 
   rl.on('line', (input) => {
-    console.log(`Received: ${input}`);
+    console.log(`LINE: ${input}`);
 
     if (lineReporter) {
       lineReporter(input);
@@ -49,17 +46,38 @@ app.post('/runcode', (req, res) => {
   });
 
   proc.on('close', (code) => {
-    console.log(`child process exited with code ${code}`);
+    if (lineReporter) {
+      lineReporter(`==== Process complete (${code}) ====`);
+    }
 
-    res.send('Done');
+    res.send(`Done ${code}`);
   });
+
+  inputFeed = (inp) => {
+    try {
+      // Ctrl-C should kill process
+      if (inp.length === 1 && inp[0] === String.fromCharCode(3)) {
+        proc.kill('SIGTERM');
+      } else {
+        proc.stdin.write(inp);
+      }
+    } catch (e) { }
+  };
 });
 
 app.ws('/terminal', (ws, req: express.Request) => {
-  lineReporter = (msg) => ws.send(msg);
+  lineReporter = (msg) => {
+    try {
+      ws.send(msg);
+    } catch (e) { }
+  };
 
   ws.on('message', (msg) => {
-    ws.send('Hello from Node: ' + msg);
+    console.log(`INP: ${msg}`);
+
+    if (inputFeed) {
+      inputFeed(msg);
+    }
   });
 });
 

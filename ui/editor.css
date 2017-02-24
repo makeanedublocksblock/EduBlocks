@@ -23,7 +23,45 @@ body {
   margin-top: -20px; /* fixes a very odd bug */
 }
 
-#blocklyArea {
-  height: 100%;
+.terminal {
+  position: fixed;
+  z-index: 10;
+  left: 20px;
+  top: 20px;
+  right: 20px;
+  bottom: 20px;
+  border: solid 1px #000;
+  line-height: 20px;
+  display: none;
+}
+.terminal-output {
+  height: calc(100% - 28px);
+}
+.terminal-output textarea {
+  font-family: Courier New, Courier, monospace;
+  font-size: 20px;
+  background: rgba(0,0,0,0.5);
+  color: #fff;
+  border: none;
+  padding: 0;
+  margin: 0;
   width: 100%;
+  height: 100%;
+}
+.terminal-output textarea:focus {
+  outline: none;
+}
+.terminal-input {
+  height: 28px;
+}
+.terminal-input input {
+  width: calc(100% - 8px);
+  height: 24px;
+  border: none;
+  padding: 2px 4px;
+  font-family: Courier New, Courier, monospace;
+  font-size: 20px;
+}
+.terminal-input input:focus {
+  outline: none;
 }
