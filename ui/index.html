@@ -244,13 +244,16 @@
 
       document.addEventListener('keydown', onkeypress);
 
+      var term = document.getElementById('term');
       var inp = document.getElementById('inp');
 
+      term.parentNode.addEventListener('click', ontermclick);
       inp.addEventListener('keyup', oninputkey);
 
       var blockly = document.getElementById('blockly');
       var workspace;
       var ws;
+      var terminalOpen = false;
 
       function initBlockly() {
         workspace = Blockly.inject(blockly,{
@@ -269,13 +272,17 @@
         if (e.keyCode === 27) {
           ws.send(String.fromCharCode(3));
 
-          toggleTerminal(false);
+          toggleTerminal();
         }
+      }
+
+      function ontermclick(e) {
+        inp.focus();
       }
 
       function oninputkey(e) {
         if (e.keyCode === 13) {
-          ws.send(inp.value + '\n');
+          ws.send(inp.value);
           inp.value = '';
         }
 
@@ -286,19 +293,30 @@
       }
 
       function initWebsocket() {
-        var term = document.getElementById('term');
+        console.log('Opening Websocket');
+
+
         ws = new WebSocket('ws://' + getHost() + '/terminal');
 
         ws.onmessage = function (evt) {
           term.value += evt.data + '\n';
           term.scrollTop = term.scrollHeight;
         };
+
+        ws.onclose = function () {
+          setTimeout(initWebsocket, 5000);
+        };
       }
 
       function toggleTerminal(show) {
+        if (typeof show === 'undefined') {
+          show = !terminalOpen;
+        }
+
         var terminal = document.getElementById('terminal');
 
         terminal.style.display = show ? 'block' : 'none';
+        terminalOpen = show;
 
         inp.focus();
       }
