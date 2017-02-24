@@ -287,7 +287,7 @@
 
       function initWebsocket() {
         var term = document.getElementById('term');
-        ws = new WebSocket('ws://' + window.location.host + '/terminal');
+        ws = new WebSocket('ws://' + getHost() + '/terminal');
 
         ws.onmessage = function (evt) {
           term.value += evt.data + '\n';
@@ -348,19 +348,23 @@
         var code = encodeURIComponent(Blockly.Python.workspaceToCode());
         var xhttp = new XMLHttpRequest();
 
-        var postUrl;
-
-        if (location.protocol === 'file:') {
-          postUrl = "http://127.0.0.1:8080/runcode";
-        }
-
-        if (location.protocol === 'http:') {
-          postUrl = "/runcode";
-        }
+        var postUrl = getHost() + '/runcode';
 
         xhttp.open("POST", postUrl, true);
         xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
         xhttp.send("code=" + code);
+      }
+
+      function getHost() {
+        if (location.protocol === 'file:') {
+          return "127.0.0.1:8080";
+        }
+
+        if (location.protocol === 'http:') {
+          return location.host;
+        }
+
+        return '';
       }
     </script>
   </body>
