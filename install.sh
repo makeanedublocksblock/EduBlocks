@@ -23,11 +23,11 @@ if (whiptail --title "EduBlocks Installer" --yesno "Welcome to the EduBlocks ins
         curl -sL https://deb.nodesource.com/setup_7.x | sudo -E bash -
         sudo apt install nodejs
         echo "Installing NPM dependencies"
-        npm install --global yarn
+        sudo npm install --global yarn
         cd ui
-        npm install
+        yarn install
         cd ../server
-        npm install
+        yarn install
         cd ../
     else
         echo "User selected Cancel."

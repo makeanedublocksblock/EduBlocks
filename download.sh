@@ -1,5 +1,9 @@
 #!/bin/bash
 
+echo "Installing deps"
+
+sudo apt-get install git curl
+
 echo "Downloading the package"
 
 REPOSRC=https://github.com/AllAboutCode/edublocks
