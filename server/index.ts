@@ -2,7 +2,7 @@ import fs = require('fs');
 import path = require('path');
 import express = require('express');
 import expressWs = require('express-ws');
-import { spawn } from 'child_process';
+import { spawn, ChildProcess } from 'child_process';
 import readline = require('readline');
 import bodyParser = require('body-parser');
 import { Readable } from 'stream';
@@ -17,6 +17,8 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 expressWs(app);
 
+let proc: ChildProcess;
+
 let lineReporter: (msg: string) => void;
 let inputFeed: (inp: string) => void;
 
@@ -25,7 +27,12 @@ app.post('/runcode', (req, res) => {
 
   fs.writeFileSync(scriptPath, code);
 
-  const proc = spawn('python3', ['-u', scriptPath], { stdio: ['pipe', 'pipe', 'pipe'] });
+  // Kill the last process if it is still running...
+  if (proc) {
+    proc.kill('SIGTERM');
+  }
+
+  proc = spawn('python3', ['-u', scriptPath], { stdio: ['pipe', 'pipe', 'pipe'] });
 
   console.log(code);
 

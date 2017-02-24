@@ -267,6 +267,8 @@
 
       function onkeypress(e) {
         if (e.keyCode === 27) {
+          ws.send(String.fromCharCode(3));
+
           toggleTerminal(false);
         }
       }
