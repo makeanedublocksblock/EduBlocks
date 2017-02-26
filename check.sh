@@ -14,10 +14,13 @@ BASE=$(git merge-base @ "$UPSTREAM")
 if [ $LOCAL = $REMOTE ]; then
     echo "Up-to-date"
 elif [ $LOCAL = $BASE ]; then
-    # Updated detected, fetching latest version...
+
+    echo "Updated detected, fetching latest version..."
     git pull
-    # Running install script
+
+    echo "Running install script..."
     bash install.sh
+
 elif [ $REMOTE = $BASE ]; then
     echo "Need to push"
 else
