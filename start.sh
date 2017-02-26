@@ -1,9 +1,12 @@
 #!/bin/bash
 
-# 2>/dev/null 1>&2 sensible-browser file:///home/pi/edublocks/ui/index.html &
+LOCALREPO=$(dirname $(readlink -f $0))
 
-cd ~/edublocks/ui
+cd $LOCALREPO
+bash check.sh
+
+cd $LOCALREPO/ui
 2>/dev/null 1>&2 npm start &
 
-cd ~/edublocks/server
+cd $LOCALREPO/server
 npm start
