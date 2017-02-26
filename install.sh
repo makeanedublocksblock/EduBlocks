@@ -27,10 +27,6 @@ if (whiptail --title "EduBlocks Installer" --yesno "Welcome to the EduBlocks ins
     npm install
     cd $LOCALREPO
     whiptail --title "EduBlocks Installer" --msgbox "Congratulations! EduBlocks has successfully installed. To get coding double click on the EduBlocks desktop icon." 8 78
-    else
-    echo "User selected Cancel."
-    fi
-
 else
     echo "Sorry to hear you won't be installing EduPython today! If you want to install from the main release channel type: wget http://edupython.co.uk/install.sh && sudo bash install.sh"
 fi
