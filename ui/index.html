@@ -79,15 +79,30 @@
           <!-- Navigation -->
           <div class="android-navigation-container">
             <nav class="android-navigation mdl-navigation">
-              <a class="mdl-navigation__link mdl-typography--text-uppercase" href="javascript:void(0)" onclick="changeTab('blockly')">Block View</a>
-              <a class="mdl-navigation__link mdl-typography--text-uppercase" href="javascript:void(0)" onclick="showPython()">Python View</a>
+              <a id="block" class="mdl-navigation__link mdl-typography--text-uppercase" href="javascript:void(0)" onclick="changeTab('blockly')">Block View</a>
+              <div class="mdl-tooltip mdl-tooltip--large" for="block">
+              Change to Block View
+              </div>
+              <a id="block1" class="mdl-navigation__link mdl-typography--text-uppercase" href="javascript:void(0)" onclick="showPython()">Python View</a>
+              <div class="mdl-tooltip mdl-tooltip--large" for="block1">
+              Change to Python View
+              </div>
               &nbsp;
               &nbsp;
               &nbsp;
               &nbsp;
-              <a class="mdl-navigation__link mdl-typography--text-uppercase" href="javascript:void(0)" onclick="openCode()">Open</a>
-              <a class="mdl-navigation__link mdl-typography--text-uppercase" href="javascript:void(0)" onclick="saveCode()">Save</a>
-              <a class="mdl-navigation__link mdl-typography--text-uppercase" href="javascript:void(0)" onclick="sendCode()">Run</a>
+              <a id="block2" class="mdl-navigation__link mdl-typography--text-uppercase" href="javascript:void(0)" onclick="openCode()">Open</a>
+              <div class="mdl-tooltip mdl-tooltip--large" for="block2">
+              Open a file
+              </div>
+              <a id="block3" class="mdl-navigation__link mdl-typography--text-uppercase" href="javascript:void(0)" onclick="saveCode()">Save</a>
+              <div class="mdl-tooltip mdl-tooltip--large" for="block3">
+              Save a file
+              </div>
+              <a id="block4" class="mdl-navigation__link mdl-typography--text-uppercase" href="javascript:void(0)" onclick="sendCode()">Run</a>
+              <div class="mdl-tooltip mdl-tooltip--large" for="block4">
+              Run your code
+              </div>
             </nav>
           </div>
         </div>
