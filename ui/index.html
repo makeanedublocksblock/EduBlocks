@@ -79,6 +79,12 @@
           <!-- Navigation -->
           <div class="android-navigation-container">
             <nav class="android-navigation mdl-navigation">
+              <a class="mdl-navigation__link mdl-typography--text-uppercase" href="javascript:void(0)" onclick="changeTab('blockly')">Block View</a>
+              <a class="mdl-navigation__link mdl-typography--text-uppercase" href="javascript:void(0)" onclick="showPython()">Python View</a>
+              &nbsp;
+              &nbsp;
+              &nbsp;
+              &nbsp;
               <a class="mdl-navigation__link mdl-typography--text-uppercase" href="javascript:void(0)" onclick="openCode()">Open</a>
               <a class="mdl-navigation__link mdl-typography--text-uppercase" href="javascript:void(0)" onclick="saveCode()">Save</a>
               <a class="mdl-navigation__link mdl-typography--text-uppercase" href="javascript:void(0)" onclick="sendCode()">Run</a>
@@ -116,7 +122,11 @@
             <input align="right" type="image" onclick="saveCode()" src="save.gif" alt="Save" width=60 height="60">
             <input align="right" type="image" onclick="openCode()" src="open.gif" alt="Open" width=60 height="60">
           </div>-->
+
           <div id="blockly"></div>
+          <div id="python"></div>
+
+
         </div>
 
 
@@ -251,6 +261,8 @@
       inp.addEventListener('keyup', oninputkey);
 
       var blockly = document.getElementById('blockly');
+      var python = document.getElementById('python');
+
       var workspace;
       var ws;
       var terminalOpen = false;
@@ -262,6 +274,26 @@
         });
 
         onresize();
+      }
+
+      function changeTab(mode) {
+        if (mode === 'blockly') {
+          blockly.style.display = 'block';
+          python.style.display = 'none';
+        }
+
+        if (mode === 'python') {
+          blockly.style.display = 'none';
+          python.style.display = 'block';
+        }
+      }
+
+      function showPython() {
+        var code = Blockly.Python.workspaceToCode();
+
+        python.innerText = code || 'No code';
+
+        changeTab('python');
       }
 
       function onresize(e) {
@@ -363,14 +395,15 @@
       function sendCode() {
         toggleTerminal(true);
 
-        var code = encodeURIComponent(Blockly.Python.workspaceToCode());
+        var code = Blockly.Python.workspaceToCode();
+
         var xhttp = new XMLHttpRequest();
 
         var postUrl = 'http://' + getHost() + '/runcode';
 
         xhttp.open("POST", postUrl, true);
         xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-        xhttp.send("code=" + code);
+        xhttp.send("code=" + encodeURIComponent(code));
       }
 
       function getHost() {
