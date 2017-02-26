@@ -2,6 +2,9 @@
 
 LOCALREPO=$(dirname $(readlink -f $0))
 
+# Make sure node isnt running somewhere...
+pkill node
+
 cd $LOCALREPO
 bash check.sh
 
