@@ -21,6 +21,8 @@ elif [ $LOCAL = $BASE ]; then
     echo "Running install script..."
     bash install.sh
 
+    echo "==== Please restart EduBlocks ===="
+
 elif [ $REMOTE = $BASE ]; then
     echo "Need to push"
 else

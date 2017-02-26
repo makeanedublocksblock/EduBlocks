@@ -122,6 +122,7 @@
           <div class="android-drawer-separator"></div>
           <a class="mdl-navigation__link" href="">Resources</a>
           <a class="mdl-navigation__link" href="">Twitter</a>
+          <a class="mdl-navigation__link" href="javascript:void(0)" onclick="checkForUpdates()">Check for updates</a>
 
 
         </nav>
@@ -431,6 +432,13 @@
         }
 
         return '';
+      }
+
+      function checkForUpdates() {
+        var childProcess = require('child_process');
+        var path = require('path');
+
+        childProcess.spawn('lxterminal', ['-e', path.join(__dirname, '..', 'check.sh')])
       }
     </script>
   </body>
