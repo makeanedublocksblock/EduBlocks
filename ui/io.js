@@ -17,8 +17,8 @@ function getElectronIo() {
   /**
    * @param {string} text
    */
-  function saveFile(text) {
-    const path = dialog.showSaveDialog({ filters: [{ name: 'EduBlocks XML', extensions: ['xml'] }] });
+  function saveFile(text, ext, extName) {
+    const path = dialog.showSaveDialog({ filters: [{ name: extName, extensions: [ext] }] });
 
     if (!path) {
       return;
