@@ -87,6 +87,10 @@
               <div class="mdl-tooltip mdl-tooltip--large" for="block1">
               Change to Python View
               </div>
+              <a id="block1" class="mdl-navigation__link mdl-typography--text-uppercase" href="javascript:void(0)" onclick="downloadPython()">Python Download</a>
+              <div class="mdl-tooltip mdl-tooltip--large" for="block1">
+              Download Python Source Code
+              </div>
               &nbsp;
               &nbsp;
               &nbsp;
@@ -312,6 +316,13 @@
         changeTab('python');
       }
 
+      function downloadPython() {
+        var code = Blockly.Python.workspaceToCode();
+
+        const io = getIo();
+        io.saveFile(code, 'py', 'Python Script');
+      }
+
       function onresize(e) {
         Blockly.svgResize(workspace);
       }
@@ -405,7 +416,7 @@
         var text = Blockly.Xml.domToPrettyText(xml);
 
         const io = getIo();
-        io.saveFile(text);
+        io.saveFile(text, 'xml', 'EduBlocks XML');
       }
 
       function sendCode() {
