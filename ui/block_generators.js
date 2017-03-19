@@ -3,11 +3,19 @@ Blockly.Python['import_edupy'] = function(block) {
   return code;
 };
 
-Blockly.Python['import_sense'] = function(block) {
+Blockly.Python['import_sonic'] = function(block) {
   // TODO: Assemble Python into code variable.
-  var code = 'from sense_hat import SenseHat\n';
+  var code = 'from psonic import *\n';
   return code;
 };
+
+Blockly.Python['sampleson'] = function(block) {
+  var text_name = block.getFieldValue('name');
+  // TODO: Assemble Python into code variable.
+  var code = 'sample(' + text_name + ')\n';
+  return code;
+};
+
 
 Blockly.Python['senseinit'] = function(block) {
   // TODO: Assemble Python into code variable.

@@ -1032,14 +1032,28 @@ Blockly.Blocks['cameraset'] = {
   }
 };
 
-Blockly.Blocks['import_sense'] = {
+Blockly.Blocks['import_sonic'] = {
   init: function() {
     this.appendDummyInput()
-        .appendField("from sense_hat import SenseHat");
+        .appendField("from psonic import *");
     this.setPreviousStatement(true, null);
     this.setNextStatement(true, null);
     this.setColour(180);
-    this.setTooltip('Imports the Sense Hat library');
+    this.setTooltip('');
+    this.setHelpUrl('');
+  }
+};
+
+Blockly.Blocks['sampleson'] = {
+  init: function() {
+    this.appendDummyInput()
+        .appendField("sample(")
+        .appendField(new Blockly.FieldTextInput("name"), "name")
+        .appendField(")");
+    this.setPreviousStatement(true, null);
+    this.setNextStatement(true, null);
+    this.setColour(180);
+    this.setTooltip('');
     this.setHelpUrl('');
   }
 };
