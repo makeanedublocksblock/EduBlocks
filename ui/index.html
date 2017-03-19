@@ -35,6 +35,8 @@
     <!-- The main Blockly files -->
     <script src="blockly/blockly_uncompressed.js"></script>
     <script src="blockly/msg/js/en.js"></script>
+    
+    <script src="lib/ace9/ace.js" type="text/javascript" charset="utf-8"></script>
 
     <!-- These are the files that define what blocks Blockly has. If you want to
     add your own blocks, you'll need to create a new file and link it here. -->
@@ -143,8 +145,11 @@
             <input align="right" type="image" onclick="openCode()" src="open.gif" alt="Open" width=60 height="60">
           </div>-->
 
+
           <div id="blockly"></div>
-          <div id="python" style="display: none"></div>
+          <div id="python" style="display: none">
+            <div id="editor"></div>
+          </div>
 
 
         </div>
@@ -270,6 +275,7 @@
     <script>
       window.addEventListener('load', initBlockly);
       window.addEventListener('load', initWebsocket);
+      window.addEventListener('load', initEditor);
       window.addEventListener('resize', onresize, false);
 
       document.addEventListener('keydown', onkeypress);
@@ -285,6 +291,7 @@
 
       var workspace;
       var ws;
+      var editor;
       var terminalOpen = false;
 
       function initBlockly() {
@@ -311,7 +318,8 @@
       function showPython() {
         var code = Blockly.Python.workspaceToCode();
 
-        python.innerText = code || 'No code';
+        // python.innerText = code || 'No code';
+        editor.setValue(code);
 
         changeTab('python');
       }
@@ -365,6 +373,23 @@
         ws.onclose = function () {
           setTimeout(initWebsocket, 5000);
         };
+      }
+
+      function initEditor() {
+        editor = ace.edit("editor");
+        editor.setTheme("ace/theme/monokai");
+        editor.getSession().setMode("ace/mode/python");
+
+        var warningShown = false;
+
+        editor.on('change', function() {
+          if (!warningShown){
+            alert('Warning, return to block view will overwrite your changes');
+
+            warningShown = true;
+          }
+          
+        });
       }
 
       function toggleTerminal(show) {
