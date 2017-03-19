@@ -24,12 +24,12 @@ a img{
 }
 
 ::-moz-selection {
-  background-color: #FF0066;
+  background-color: black;
   color: #fff;
 }
 
 ::selection {
-  background-color: #FF0066;
+  background-color: black;
   color: #fff;
 }
 
@@ -62,7 +62,7 @@ a img{
 
 
 .android-logo-image {
-  height: 25px;
+  height: 35px;
   width: 140px;
 }
 
@@ -207,7 +207,7 @@ a img{
   }
 
     .android-navigation .mdl-navigation__link:hover {
-      border-bottom: 4px solid #FF0066;
+      border-bottom: 4px solid black;
     }
 
   .android-search-box {
@@ -241,12 +241,13 @@ a img{
   }
 
   .android-drawer span.mdl-navigation__link.mdl-navigation__link {
-    color: #FF0066;
+    color: black;
+    font-weight: bold;
   }
 
   .android-drawer .mdl-layout-title {
     position: relative;
-    background: #FF0066;
+    background: black;
     height: 160px;
   }
 
