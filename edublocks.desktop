@@ -1,6 +1,6 @@
 [Desktop Entry]
 Version=1.1.0
-Name=BlockPy
+Name=EduBlocks
 Comment=Making the transition from Scratch to Python easier.
 Exec=bash ./edublocks/start.sh
 Icon=/usr/share/icons/hicolor/scalable/apps/logo.png
