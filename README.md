@@ -1,7 +1,4 @@
-image:: ui/logo.png
-  :height: 100px
-  :width: 200 px
-  :scale: 50 %
+![alt tag](https://github.com/AllAboutCode/EduBlocks/blob/master/ui/logo.png)
 
 EduBlocks
 =========
