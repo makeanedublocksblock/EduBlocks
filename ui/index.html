@@ -1,458 +1,167 @@
 <!doctype html>
-<!--
-  Material Design Lite
-  Copyright 2015 Google Inc. All rights reserved.
-
-  Licensed under the Apache License, Version 2.0 (the "License");
-  you may not use this file except in compliance with the License.
-  You may obtain a copy of the License at
-
-      https://www.apache.org/licenses/LICENSE-2.0
-
-  Unless required by applicable law or agreed to in writing, software
-  distributed under the License is distributed on an "AS IS" BASIS,
-  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-  See the License for the specific language governing permissions and
-  limitations under the License
--->
-
 <html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="description" content="BlockPy">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
-    <title>EduBlocks</title>
-    <link rel="shortcut icon" href="logo.png" type="image/x-icon">
 
-    <!-- Page styles -->
-    <link rel="stylesheet" href="lib/icon.css">
-    <link rel="stylesheet" href="lib/material.css">
-    <link rel="stylesheet" href="ui.css">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="description" content="BlockPy">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+  <title>EduBlocks</title>
+  <link rel="shortcut icon" href="logo.png" type="image/x-icon">
 
-    <link rel="stylesheet" href="editor.css">
+  <!-- Page styles -->
+  <link rel="stylesheet" href="editor.css">
 
-    <!-- The main Blockly files -->
-    <script src="blockly/blockly_compressed.js"></script>
-    <script src="blockly/python_compressed.js"></script>
+  <!-- The main Blockly files -->
+  <script src="blockly/blockly_compressed.js"></script>
+  <script src="blockly/python_compressed.js"></script>
 
-    <script src="lib/ace9/ace.js" type="text/javascript" charset="utf-8"></script>
+  <script src="lib/ace9/ace.js" type="text/javascript" charset="utf-8"></script>
+  <script src="lib/ace9/mode-python.js" type="text/javascript" charset="utf-8"></script>
+  <script src="lib/ace9/theme-monokai.js" type="text/javascript" charset="utf-8"></script>
 
-    <script src="block_generators.js"></script>
-    <script src="block_definitions.js"></script>
+  <script src="block_generators.js"></script>
+  <script src="block_definitions.js"></script>
 
-    <script src="lib/FileSaver.js"></script>
-    <script src="io.js"></script>
-  </head>
-  <body>
-    <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
+  <script src="lib/FileSaver.js"></script>
+  <script src="io.js"></script>
+</head>
 
-      <div id="header" class="android-header mdl-layout__header mdl-layout__header--waterfall">
-        <div class="mdl-layout__header-row">
-          <span class="android-title mdl-layout-title">
-            <img height="40" width="40" src="logo.png">
-          </span>
-          <!-- Add spacer, to align navigation to the right in desktop -->
-          <div class="android-header-spacer mdl-layout-spacer"></div>
+<body>
+  <div id="page">
+    <header>
+      <img src="logo.png" />
 
-          <!-- Navigation -->
-          <div class="android-navigation-container">
-            <nav class="android-navigation mdl-navigation">
-              <a id="block" class="mdl-navigation__link mdl-typography--text-uppercase" href="javascript:void(0)" onclick="changeTab('blockly')">Block View</a>
-              <div class="mdl-tooltip mdl-tooltip--large" for="block">
-              Change to Block View
-              </div>
-              <a id="block1" class="mdl-navigation__link mdl-typography--text-uppercase" href="javascript:void(0)" onclick="showPython()">Python View</a>
-              <div class="mdl-tooltip mdl-tooltip--large" for="block1">
-              Change to Python View
-              </div>
-              <a id="blockz1" class="mdl-navigation__link mdl-typography--text-uppercase" href="javascript:void(0)" onclick="downloadPython()">Python Download</a>
-              <div class="mdl-tooltip mdl-tooltip--large" for="blockz1">
-              Download Python Source Code
-              </div>
-              &nbsp;
-              &nbsp;
-              &nbsp;
-              &nbsp;
-              <a id="block2" class="mdl-navigation__link mdl-typography--text-uppercase" href="javascript:void(0)" onclick="openCode()">Open</a>
-              <div class="mdl-tooltip mdl-tooltip--large" for="block2">
-              Open a file
-              </div>
-              <a id="block3" class="mdl-navigation__link mdl-typography--text-uppercase" href="javascript:void(0)" onclick="saveCode()">Save</a>
-              <div class="mdl-tooltip mdl-tooltip--large" for="block3">
-              Save a file
-              </div>
-              <a id="block4" class="mdl-navigation__link mdl-typography--text-uppercase" href="javascript:void(0)" onclick="sendCode()">Run</a>
-              <div class="mdl-tooltip mdl-tooltip--large" for="block4">
-              Run your code
-              </div>
-            </nav>
-          </div>
-        </div>
+      <h1>EduBlocks</h1>
+
+      <nav class="android-navigation mdl-navigation">
+        <a id="block" title="Change to Block View" href="javascript:void(0)" onclick="changeTab('blockly')">Block View</a>
+        <a id="block1" title="Change to Python View" href="javascript:void(0)" onclick="showPython()">Python View</a>
+        <a id="blockz1" title="Download Python Source Code" href="javascript:void(0)" onclick="downloadPython()">Python Download</a>
+        <a id="block2" title="Open a file" href="javascript:void(0)" onclick="openCode()">Open</a>
+        <a id="block3" title="Save a file" href="javascript:void(0)" onclick="saveCode()">Save</a>
+        <a id="block4" title="Run your code" href="javascript:void(0)" onclick="sendCode()">Run</a>
+      </nav>
+    </header>
+
+    <section>
+      <div id="blockly"></div>
+
+      <div id="python" style="display: none">
+        <div id="editor"></div>
       </div>
+    </section>
+  </div>
 
-      <div class="android-drawer mdl-layout__drawer">
-        <span class="mdl-layout-title">
-          <img class="android-logo-image" src="images/logowhite.png">
-        </span>
-        <nav class="mdl-navigation">
-          <span class="mdl-navigation__link" href="">Themes</span>
-          <a class="mdl-navigation__link" href="javascript:void(0)" onclick="changeTheme('android')">Default</a>
-          <a class="mdl-navigation__link" href="javascript:void(0)" onclick="changeTheme('minecraft')">Minecraft</a>
-          <a class="mdl-navigation__link" href="javascript:void(0)" onclick="changeTheme('circuit')">Circuit</a>
-          <a class="mdl-navigation__link" href="javascript:void(0)" onclick="changeTheme('space')">Space</a>
-          <a class="mdl-navigation__link" href="javascript:void(0)" onclick="changeTheme('slate')">Slate UI Signature</a>
-          <div class="android-drawer-separator"></div>
-          <a class="mdl-navigation__link" href="">Resources</a>
-          <a class="mdl-navigation__link" href="">Twitter</a>
-          <a class="mdl-navigation__link" href="javascript:void(0)" onclick="checkForUpdates()">Check for updates</a>
-
-
-        </nav>
-      </div>
-
-      <div class="android-content mdl-layout__content">
-        <a name="top"></a>
-
-        <div id="content">
-          <!--<div id="header">
-            <img align="left" src="logo.png" width="60" height="60">
-            <input align="right" type="image" onclick="sendCode()" src="submit.gif" alt="Submit" width=60 height="60">
-            <input align="right" type="image" onclick="saveCode()" src="save.gif" alt="Save" width=60 height="60">
-            <input align="right" type="image" onclick="openCode()" src="open.gif" alt="Open" width=60 height="60">
-          </div>-->
-
-
-          <div id="blockly"></div>
-          <div id="python" style="display: none">
-            <div id="editor"></div>
-          </div>
-
-
-        </div>
-
-
-      </div>
+  <div id="terminal" class="terminal">
+    <div class="terminal-output">
+      <textarea id="term" disabled="disabled"></textarea>
     </div>
-
-    <div id="terminal" class="terminal">
-      <div class="terminal-output">
-        <textarea id="term" disabled="disabled"></textarea>
-      </div>
-      <div class="terminal-input">
-        <input type="text" id="inp">
-      </div>
+    <div class="terminal-input">
+      <input type="text" id="inp">
     </div>
+  </div>
 
-    <script src="lib/material.js"></script>
-
-    <!-- The Blockly toolbox, which is where blocks are dragged out from. If you
+  <!-- The Blockly toolbox, which is where blocks are dragged out from. If you
     add your own blocks, you'll need to add them here as well. -->
-    <xml id="toolbox" style="display: none">
-      <category name="General" colour="336">
-        <block type="import_edupy"></block>
-        <block type="random"></block>
-        <block type="while_true"></block>
-        <block type="if"></block>
-        <block type="elif"></block>
-        <block type="else"></block>
-        <block type="df"></block>
-        <block type="whileout"></block>
-        <block type="time"></block>
-        <block type="import_math"></block>
-        <block type="sleep"></block>
-        <block type="print"></block>
-        <block type="equalsblock"></block>
-        <block type="define"></block>
-        <block type="greater"></block>
-      </category>
-      <category name="EduPy" colour="60">
+  <xml id="toolbox" style="display: none">
+    <category name="General" colour="336">
+      <block type="import_edupy"></block>
+      <block type="random"></block>
+      <block type="while_true"></block>
+      <block type="if"></block>
+      <block type="elif"></block>
+      <block type="else"></block>
+      <block type="df"></block>
+      <block type="whileout"></block>
+      <block type="time"></block>
+      <block type="import_math"></block>
+      <block type="sleep"></block>
+      <block type="print"></block>
+      <block type="equalsblock"></block>
+      <block type="define"></block>
+      <block type="greater"></block>
+    </category>
+    <category name="EduPy" colour="60">
 
-      	<category name="Kit 1" colour="196">
-        	<block type="led_on"></block>
-        	<block type="led_off"></block>
-        	<block type="button_pressed"></block>
-        	<block type="all_on"></block>
-        	<block type="all_off"></block>
-        	<block type="all_blink"></block>
-        	<block type="button"></block>
-        	<block type="buzzer"></block>
-        	<block type="blink"></block>
-        	<block type="user_input"></block>
-        	<block type="crossing"></block>
-        	<block type="dot"></block>
-        	<block type="dash"></block>
-        	<block type="letter"></block>
-        	<block type="word"></block>
-        </category>
-        <category name="Kit 2" colour="45">
-        	<block type="2led_on"></block>
-        	<block type="2led_off"></block>
-                <block type="2buzzer"></block>
-        	<block type="temperature"></block>
-        	<block type="ldr"></block>
-        	<block type="capacitor"></block>
-        	<block type="motion"></block>
-        	<block type="alarm"></block>
-        </category>
-        <category name="Kit 3" colour="0">
-        	<block type="forward"></block>
-        	<block type="backward"></block>
-        	<block type="turn_left"></block>
-        	<block type="turn_right"></block>
-        	<block type="stop"></block>
-        	<block type="get_reading"></block>
-       		<block type="line_test"></block>
-        	<block type="key_control"></block>
-        	<block type="line_follower"></block>
-            <block type="avoid"></block>
-        </category>
+      <category name="Kit 1" colour="196">
+        <block type="led_on"></block>
+        <block type="led_off"></block>
+        <block type="button_pressed"></block>
+        <block type="all_on"></block>
+        <block type="all_off"></block>
+        <block type="all_blink"></block>
+        <block type="button"></block>
+        <block type="buzzer"></block>
+        <block type="blink"></block>
+        <block type="user_input"></block>
+        <block type="crossing"></block>
+        <block type="dot"></block>
+        <block type="dash"></block>
+        <block type="letter"></block>
+        <block type="word"></block>
+      </category>
+      <category name="Kit 2" colour="45">
+        <block type="2led_on"></block>
+        <block type="2led_off"></block>
+        <block type="2buzzer"></block>
+        <block type="temperature"></block>
+        <block type="ldr"></block>
+        <block type="capacitor"></block>
+        <block type="motion"></block>
+        <block type="alarm"></block>
+      </category>
+      <category name="Kit 3" colour="0">
+        <block type="forward"></block>
+        <block type="backward"></block>
+        <block type="turn_left"></block>
+        <block type="turn_right"></block>
+        <block type="stop"></block>
+        <block type="get_reading"></block>
+        <block type="line_test"></block>
+        <block type="key_control"></block>
+        <block type="line_follower"></block>
+        <block type="avoid"></block>
+      </category>
     </category>
     <category name="Minecraft" colour="120">
-    	<category name="General" colour="270">
-        	<block type="mcimport"></block>
-          <block type="mccreate"></block>
-          <block type="import_block"></block>
+      <category name="General" colour="270">
+        <block type="mcimport"></block>
+        <block type="mccreate"></block>
+        <block type="import_block"></block>
 
 
-        </category>
-        <category name="Commands" colour="120">
-        	      <block type="mcpost"></block>
-                <block type="mcpos"></block>
-                <block type="varprint"></block>
-                <block type="setpos"></block>
-                <block type="campos"></block>
-                <block type="getblock"></block>
-                <block type="cameraset"></block>
-                <block type="setblock"></block>
-                <block type="mcvar"></block>
-                <block type="mctext"></block>
-                <block type="mcblocks"></block>
-                <block type="build"></block>
-                <block type="mctext2"></block>
-                <block type="mctext5"></block>
-                <block type="mcblocks8"></block>
+      </category>
+      <category name="Commands" colour="120">
+        <block type="mcpost"></block>
+        <block type="mcpos"></block>
+        <block type="varprint"></block>
+        <block type="setpos"></block>
+        <block type="campos"></block>
+        <block type="getblock"></block>
+        <block type="cameraset"></block>
+        <block type="setblock"></block>
+        <block type="mcvar"></block>
+        <block type="mctext"></block>
+        <block type="mcblocks"></block>
+        <block type="build"></block>
+        <block type="mctext2"></block>
+        <block type="mctext5"></block>
+        <block type="mcblocks8"></block>
 
-                <block type="return"></block>
-                <block type="getdist"></block>
-        </category>
+        <block type="return"></block>
+        <block type="getdist"></block>
+      </category>
     </category>
     <category name="Sonic Pi" colour="180">
       <block type="import_sonic"></block>
       <block type="sampleson"></block>
 
     </category>
+  </xml>
 
+  <script type="text/javascript" src="edublocks.js"></script>
 
-    </xml>
+</body>
 
-    <!-- The script to add blockly to the page. It's a little more complicated
-    than the standard blockly one as it makes the blockly div resize as the page
-    is resized, rather than being a fixed size. -->
-    <script>
-      window.addEventListener('load', initBlockly);
-      window.addEventListener('load', initWebsocket);
-      window.addEventListener('load', initEditor);
-      window.addEventListener('resize', onresize, false);
-
-      document.addEventListener('keydown', onkeypress);
-
-      var term = document.getElementById('term');
-      var inp = document.getElementById('inp');
-
-      term.parentNode.addEventListener('click', ontermclick);
-      inp.addEventListener('keyup', oninputkey);
-
-      var blockly = document.getElementById('blockly');
-      var python = document.getElementById('python');
-
-      var workspace;
-      var ws;
-      var editor;
-      var terminalOpen = false;
-
-      function initBlockly() {
-        workspace = Blockly.inject(blockly,{
-          media: 'blockly/media/',
-          toolbox: document.getElementById('toolbox')
-        });
-
-        onresize();
-      }
-
-      function changeTab(mode) {
-        if (mode === 'blockly') {
-          blockly.style.display = 'block';
-          python.style.display = 'none';
-        }
-
-        if (mode === 'python') {
-          blockly.style.display = 'none';
-          python.style.display = 'block';
-        }
-      }
-
-      function showPython() {
-        var code = Blockly.Python.workspaceToCode();
-
-        // python.innerText = code || 'No code';
-        editor.setValue(code);
-
-        changeTab('python');
-      }
-
-      function downloadPython() {
-        var code = Blockly.Python.workspaceToCode();
-
-        const io = getIo();
-        io.saveFile(code, 'py', 'Python Script');
-      }
-
-      function onresize(e) {
-        Blockly.svgResize(workspace);
-      }
-
-      function onkeypress(e) {
-        if (e.keyCode === 27) {
-          ws.send(String.fromCharCode(3));
-
-          toggleTerminal();
-        }
-      }
-
-      function ontermclick(e) {
-        inp.focus();
-      }
-
-      function oninputkey(e) {
-        if (e.keyCode === 13) {
-          ws.send(inp.value);
-          inp.value = '';
-        }
-
-        // Detect Ctrl-C
-        if (e.keyCode === 67 && e.ctrlKey) {
-          ws.send(String.fromCharCode(3));
-        }
-      }
-
-      function initWebsocket() {
-        console.log('Opening Websocket');
-
-
-        ws = new WebSocket('ws://' + getHost() + '/terminal');
-
-        ws.onmessage = function (evt) {
-          term.value += evt.data + '\n';
-          term.scrollTop = term.scrollHeight;
-        };
-
-        ws.onclose = function () {
-          setTimeout(initWebsocket, 5000);
-        };
-      }
-
-      function initEditor() {
-        editor = ace.edit("editor");
-        editor.setTheme("ace/theme/monokai");
-        editor.getSession().setMode("ace/mode/python");
-
-        var warningShown = false;
-
-        editor.on('change', function() {
-          if (!warningShown){
-            alert('Warning, return to block view will overwrite your changes');
-
-            warningShown = true;
-          }
-
-        });
-      }
-
-      function toggleTerminal(show) {
-        if (typeof show === 'undefined') {
-          show = !terminalOpen;
-        }
-
-        var terminal = document.getElementById('terminal');
-
-        terminal.style.display = show ? 'block' : 'none';
-        terminalOpen = show;
-
-        inp.focus();
-      }
-
-      function changeTheme(themeName) {
-        var header = document.getElementById('header');
-        var classNames = header.className.replace(/[a-z]+\-header\ /, '');
-        header.className = classNames + ' ' + themeName + '-header';
-      }
-
-      function openCode() {
-        var fileInput = document.createElement('input');
-        fileInput.type = 'file';
-        fileInput.accept = '.xml';
-        fileInput.addEventListener('change', readSingleFile, false);
-        fileInput.click();
-
-        function readSingleFile(e) {
-          var file = e.target.files[0];
-          if (!file) return;
-
-          var reader = new FileReader();
-          reader.onload = function(e) {
-            var contents = e.target.result;
-            gotContents(contents);
-          };
-          reader.readAsText(file);
-        }
-
-        function gotContents(text) {
-          var textToDom = Blockly.Xml.textToDom(text);
-          Blockly.Xml.domToWorkspace(Blockly.mainWorkspace, textToDom);
-        }
-      }
-
-      function saveCode() {
-        var xml = Blockly.Xml.workspaceToDom(Blockly.mainWorkspace);
-        var text = Blockly.Xml.domToPrettyText(xml);
-
-        const io = getIo();
-        io.saveFile(text, 'xml', 'EduBlocks XML');
-      }
-
-      function sendCode() {
-        toggleTerminal(true);
-
-        var code = Blockly.Python.workspaceToCode();
-
-        var xhttp = new XMLHttpRequest();
-
-        var postUrl = 'http://' + getHost() + '/runcode';
-
-        xhttp.open("POST", postUrl, true);
-        xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-        xhttp.send("code=" + encodeURIComponent(code));
-      }
-
-      function getHost() {
-        if (location.protocol === 'file:') {
-          return "127.0.0.1:8080";
-        }
-
-        if (location.protocol === 'http:') {
-          return location.host;
-        }
-
-        return '';
-      }
-
-      function checkForUpdates() {
-        var childProcess = require('child_process');
-        var path = require('path');
-
-        childProcess.spawn('lxterminal', ['-e', path.join(__dirname, '..', 'check.sh')])
-      }
-    </script>
-  </body>
 </html>

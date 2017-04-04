@@ -22,9 +22,9 @@ if (whiptail --title "EduBlocks Installer" --yesno "Welcome to the EduBlocks ins
     curl -sL https://deb.nodesource.com/setup_7.x | sudo -E bash -
     sudo apt install nodejs
     cd $LOCALREPO/ui
-    npm install
+    npm install --production
     cd $LOCALREPO/server
-    npm install
+    npm install --production
     cd $LOCALREPO
     whiptail --title "EduBlocks Installer" --msgbox "Congratulations! EduBlocks has successfully installed. To get coding double click on the EduBlocks desktop icon." 8 78
 else

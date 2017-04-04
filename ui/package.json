@@ -17,6 +17,9 @@
   "author": "GitHub",
   "license": "CC0-1.0",
   "devDependencies": {
+    "inliner": "^1.11.0"
+  },
+  "dependencies": {
     "electron": "^1.4.1"
   }
 }
