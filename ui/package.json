@@ -4,7 +4,8 @@
   "description": "A minimal Electron application",
   "main": "main.js",
   "scripts": {
-    "start": "electron ."
+    "start": "electron .",
+    "inline": "http-server & inliner http://localhost:8080/ | gzip > build/bundle.html.gz"
   },
   "repository": "https://github.com/electron/electron-quick-start",
   "keywords": [
@@ -17,6 +18,7 @@
   "author": "GitHub",
   "license": "CC0-1.0",
   "devDependencies": {
+    "http-server": "^0.9.0",
     "inliner": "^1.11.0"
   },
   "dependencies": {
