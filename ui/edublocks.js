@@ -1,15 +1,20 @@
 window.addEventListener("load", initBlockly);
+window.addEventListener("load", initTerminal);
 window.addEventListener("load", initWebsocket);
 window.addEventListener("load", initEditor);
 window.addEventListener("resize", onresize, false);
 
 document.addEventListener("keydown", onkeypress);
 
-var term = document.getElementById("term");
-var inp = document.getElementById("inp");
+window.addEventListener("resize", resizeTerminal);
 
-term.parentNode.addEventListener("click", ontermclick);
-inp.addEventListener("keyup", oninputkey);
+// var term = document.getElementById("term");
+var termContainer = document.getElementById("term");
+var term;
+// var inp = document.getElementById("inp");
+
+// term.parentNode.addEventListener("click", ontermclick);
+// inp.addEventListener("keyup", oninputkey);
 
 var blockly = document.getElementById("blockly");
 var python = document.getElementById("python");
@@ -69,13 +74,13 @@ function onkeypress(e) {
 }
 
 function ontermclick(e) {
-  inp.focus();
+  // inp.focus();
 }
 
 function oninputkey(e) {
   if (e.keyCode === 13) {
     ws.send(inp.value);
-    inp.value = "";
+    // inp.value = "";
   }
 
   // Detect Ctrl-C
@@ -84,19 +89,51 @@ function oninputkey(e) {
   }
 }
 
+function calculateSize(win) {
+  var cols = Math.max(80, Math.min(300, termContainer.clientWidth / 6.7)) | 0;
+  var rows = Math.max(10, Math.min(80, termContainer.clientHeight / 20.5)) | 0;
+
+  return [cols, rows];
+}
+
+function resizeTerminal() {
+  var size = calculateSize(self);
+
+  term.resize(size[0], size[1]);
+}
+
+function initTerminal() {
+  var size = calculateSize(self);
+
+  term = new Terminal({
+    cols: size[0],
+    rows: size[1],
+    useStyle: true,
+    screenKeys: true,
+    cursorBlink: false
+  });
+
+  term.open(document.getElementById("term"));
+  // term.write("Hello world!");
+}
+
 function initWebsocket() {
   console.log("Opening Websocket");
 
-  ws = new WebSocket("ws://" + getHost() + "/terminal");
+  // ws = new WebSocket("ws://" + getHost() + "/terminal");
 
-  ws.onmessage = function(evt) {
-    term.value += evt.data + "\n";
-    term.scrollTop = term.scrollHeight;
-  };
+  // ws.onmessage = function(evt) {
+  //   term.value += evt.data + "\n";
+  //   term.scrollTop = term.scrollHeight;
+  // };
 
-  ws.onclose = function() {
-    setTimeout(initWebsocket, 5000);
-  };
+  // ws.onclose = function() {
+  //   setTimeout(initWebsocket, 5000);
+  // };
+
+  ws = micropythonWs(term);
+
+  ws.connect("ws://192.168.4.1:8266");
 }
 
 function initEditor() {
@@ -120,12 +157,14 @@ function toggleTerminal(show) {
     show = !terminalOpen;
   }
 
-  var terminal = document.getElementById("terminal");
+  var terminal = document.getElementById("terminal-dialog");
 
   terminal.style.display = show ? "block" : "none";
   terminalOpen = show;
 
-  inp.focus();
+  if (show) resizeTerminal();
+
+  // inp.focus();
 }
 
 function changeTheme(themeName) {
@@ -172,13 +211,12 @@ function sendCode() {
 
   var code = Blockly.Python.workspaceToCode();
 
-  var xhttp = new XMLHttpRequest();
-
-  var postUrl = "http://" + getHost() + "/runcode";
-
-  xhttp.open("POST", postUrl, true);
-  xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-  xhttp.send("code=" + encodeURIComponent(code));
+  ws.send(code);
+  // var xhttp = new XMLHttpRequest();
+  // var postUrl = "http://" + getHost() + "/runcode";
+  // xhttp.open("POST", postUrl, true);
+  // xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+  // xhttp.send("code=" + encodeURIComponent(code));
 }
 
 function getHost() {

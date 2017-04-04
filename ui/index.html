@@ -24,7 +24,10 @@
   <script src="block_definitions.js"></script>
 
   <script src="lib/FileSaver.js"></script>
+  <script src="lib/term.js"></script>
+
   <script src="io.js"></script>
+  <script src="micropython-ws.js"></script>
 </head>
 
 <body>
@@ -53,12 +56,9 @@
     </section>
   </div>
 
-  <div id="terminal" class="terminal">
-    <div class="terminal-output">
-      <textarea id="term" disabled="disabled"></textarea>
-    </div>
-    <div class="terminal-input">
-      <input type="text" id="inp">
+  <div id="terminal-dialog" class="terminal-dialog">
+    <div class="terminal-output" id="term">
+      <!--<textarea id="term" disabled="disabled"></textarea>-->
     </div>
   </div>
 

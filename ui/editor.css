@@ -71,7 +71,7 @@ section {
   left: 0;
 }
 
-.terminal {
+.terminal-dialog {
   position: fixed;
   z-index: 10;
   left: 20px;
@@ -83,9 +83,10 @@ section {
   display: none;
 }
 .terminal-output {
-  height: calc(100% - 28px);
+  height: 100%;
+  background: #333;
 }
-.terminal-output textarea {
+/*.terminal-output textarea {
   font-family: Courier New, Courier, monospace;
   font-size: 20px;
   background: rgba(0,0,0,0.5);
@@ -98,7 +99,7 @@ section {
 }
 .terminal-output textarea:focus {
   outline: none;
-}
+}*/
 .terminal-input {
   height: 28px;
 }
