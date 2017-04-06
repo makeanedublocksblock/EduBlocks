@@ -5,7 +5,7 @@
   "main": "main.js",
   "scripts": {
     "start": "electron .",
-    "inline": "http-server & inliner http://localhost:8080/ | gzip > build/webrepl-inlined.html.gz"
+    "inline": "http-server -p 8765 & inliner http://localhost:8765/ | gzip > build/webrepl-inlined.html.gz"
   },
   "repository": "https://github.com/electron/electron-quick-start",
   "keywords": [
