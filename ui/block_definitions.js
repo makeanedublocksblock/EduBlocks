@@ -23,6 +23,34 @@ Blockly.Blocks['df'] = {
   }
 };
 
+Blockly.Blocks['play'] = {
+  init: function() {
+    this.appendDummyInput()
+        .appendField("play(")
+        .appendField(new Blockly.FieldTextInput("0"), "value")
+        .appendField(")");
+    this.setPreviousStatement(true, null);
+    this.setNextStatement(true, null);
+    this.setColour(180);
+    this.setTooltip('Play a single note');
+    this.setHelpUrl('');
+  }
+};
+
+Blockly.Blocks['sleep'] = {
+  init: function() {
+    this.appendDummyInput()
+        .appendField("sleep(")
+        .appendField(new Blockly.FieldTextInput("0"), "value")
+        .appendField(")");
+    this.setPreviousStatement(true, null);
+    this.setNextStatement(true, null);
+    this.setColour(180);
+    this.setTooltip('Play a single note');
+    this.setHelpUrl('');
+  }
+};
+
 Blockly.Blocks['import_block'] = {
   init: function() {
     this.appendDummyInput()
