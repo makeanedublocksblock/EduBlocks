@@ -9,6 +9,20 @@ Blockly.Python['import_sonic'] = function(block) {
   return code;
 };
 
+Blockly.Python['play'] = function(block) {
+  var text_value = block.getFieldValue('value');
+  // TODO: Assemble Python into code variable.
+  var code = 'play(' + text_value + ')\n';
+  return code;
+};
+
+Blockly.Python['sleep'] = function(block) {
+  var text_value = block.getFieldValue('value');
+  // TODO: Assemble Python into code variable.
+  var code = 'sleep(' + text_value + ')\n';
+  return code;
+};
+
 Blockly.Python['sampleson'] = function(block) {
   var text_name = block.getFieldValue('name');
   // TODO: Assemble Python into code variable.
