@@ -1,11 +1,14 @@
 {
-  "name": "EduBlocks",
+  "name": "edublocks-micro",
   "version": "1.0.0",
   "description": "A minimal Electron application",
   "main": "main.js",
   "scripts": {
+    "compile": "tsc",
+    "watch": "tsc --watch",
     "start": "electron .",
-    "inline": "http-server -p 8765 & inliner http://localhost:8765/ | gzip > build/webrepl-inlined.html.gz"
+    "inline": "http-server -p 8765 & inliner http://localhost:8765/ | gzip > build/webrepl-inlined.html.gz",
+    "lint": "tslint src/**/*.ts"
   },
   "repository": "https://github.com/electron/electron-quick-start",
   "keywords": [
@@ -18,10 +21,13 @@
   "author": "GitHub",
   "license": "CC0-1.0",
   "devDependencies": {
+    "@types/lodash": "^4.14.62",
     "http-server": "^0.9.0",
-    "inliner": "^1.11.0"
+    "inliner": "^1.11.0",
+    "tslint": "^5.0.0",
+    "typescript": "^2.2.2"
   },
   "dependencies": {
-    "electron": "^1.4.1"
+
   }
 }
