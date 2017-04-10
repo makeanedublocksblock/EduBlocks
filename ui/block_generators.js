@@ -3,6 +3,11 @@ Blockly.Python['import_edupy'] = function(block) {
   return code;
 };
 
+Blockly.Python['pass'] = function(block) {
+  var code = 'pass \n';
+  return code;
+};
+
 Blockly.Python['import_sonic'] = function(block) {
   // TODO: Assemble Python into code variable.
   var code = 'from psonic import *\n';
@@ -16,7 +21,7 @@ Blockly.Python['play'] = function(block) {
   return code;
 };
 
-Blockly.Python['sleep'] = function(block) {
+Blockly.Python['sleep1'] = function(block) {
   var text_value = block.getFieldValue('value');
   // TODO: Assemble Python into code variable.
   var code = 'sleep(' + text_value + ')\n';

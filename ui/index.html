@@ -153,6 +153,7 @@
         <block type="import_edupy"></block>
         <block type="random"></block>
         <block type="while_true"></block>
+        <block type="pass"></block>
         <block type="if"></block>
         <block type="elif"></block>
         <block type="else"></block>
@@ -241,7 +242,7 @@
       <block type="import_sonic"></block>
       <block type="sampleson"></block>
       <block type="play"></block>
-      <block type="sleep"></block>
+      <block type="sleep1"></block>
     </category>
 
 
@@ -315,7 +316,7 @@
 
       function onkeypress(e) {
         if (e.keyCode === 27) {
-          ws.send(String.fromCharCode(3));
+          //ws.send(String.fromCharCode(3));
 
           toggleTerminal();
         }

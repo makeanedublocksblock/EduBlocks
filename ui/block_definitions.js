@@ -10,6 +10,18 @@ Blockly.Blocks['import_edupy'] = {
   }
 };
 
+Blockly.Blocks['pass'] = {
+  init: function() {
+    this.appendDummyInput()
+        .appendField("pass");
+    this.setPreviousStatement(true, null);
+    this.setNextStatement(true, null);
+    this.setColour(336);
+    this.setTooltip('Pass to the next command');
+    this.setHelpUrl('http://www.example.com/');
+  }
+};
+
 Blockly.Blocks['df'] = {
   init: function() {
     this.appendDummyInput()
@@ -37,7 +49,7 @@ Blockly.Blocks['play'] = {
   }
 };
 
-Blockly.Blocks['sleep'] = {
+Blockly.Blocks['sleep1'] = {
   init: function() {
     this.appendDummyInput()
         .appendField("sleep(")
@@ -62,6 +74,8 @@ Blockly.Blocks['import_block'] = {
     this.setHelpUrl('http://www.example.com/');
   }
 };
+
+
 
 Blockly.Blocks['random'] = {
   init: function() {
