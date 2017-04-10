@@ -1,3 +1,5 @@
+/// <reference path="../node_modules/@types/es6-promise/index.d.ts" />
+
 const WebReplPassword = 'shrimping';
 
 const RT_PutFile = 1;
@@ -16,16 +18,26 @@ const BM_ResponseForGetVer = 31;
 
 type BinaryModes = typeof BM_None | typeof BM_FirstResponseForPut | typeof BM_FinalResponseForPut | typeof BM_FirstResponseForGet | typeof BM_FileData | typeof BM_FinalResponseForGet | typeof BM_ResponseForGetVer;
 
+interface Events {
+  open: () => void;
+  line: (line: string) => void;
+}
+
 interface MicropythonWs {
   connect(url: string): void;
   send(data: string): void;
 
   getVer(): void;
   sendFile(f: File): void;
-  getFile(src_fname: string): void;
+  getFile(src_fname: string): Promise<Blob>;
+
+  scanNetworks(): Promise<string[]>;
+  listFiles(): Promise<string[]>;
+
+  on<K extends keyof Events>(eventType: K, handler: Events[K]): void;
 }
 
-function micropythonWs(term: Terminal): MicropythonWs {
+function micropythonWs(term?: Terminal): MicropythonWs {
   let ws: WebSocket;
   let connected = false;
 
@@ -36,6 +48,15 @@ function micropythonWs(term: Terminal): MicropythonWs {
   let getFileName: string | null = null;
   let getFileData: Uint8Array | null = null;
 
+  // Oneshot handlers called in WS receive
+  let getFileHandler: ((blob: Blob) => void) | null = null;
+  let jsonHandler: ((json: object | any[]) => void) | null = null;
+
+  const eventHandlers: Events = {
+    'open': () => void 0,
+    'line': () => void 0,
+  };
+
   function prepareForConnect() {
     console.log('prepare_for_connect');
   }
@@ -44,9 +65,8 @@ function micropythonWs(term: Terminal): MicropythonWs {
     console.log(s);
   }
 
-  function saveAs(blob: Blob, fileName: string) {
-    console.log(blob, fileName);
-    // TODO
+  function on<K extends keyof Events>(eventType: K, handler: Events[K]) {
+    eventHandlers[eventType] = handler;
   }
 
   function connect(url: string) {
@@ -55,25 +75,30 @@ function micropythonWs(term: Terminal): MicropythonWs {
     ws.binaryType = 'arraybuffer';
 
     ws.onopen = () => {
-      term.removeAllListeners('data');
+      let receiveBuffer = '';
 
-      term.on('data', (data) => {
-        // Pasted data from clipboard will likely contain
-        // LF as EOL chars.
-        data = data.replace(/\n/g, '\r');
-        ws.send(data);
-      });
+      if (term) {
+        term.removeAllListeners('data');
 
-      term.on('title', (title) => {
-        document.title = title;
-      });
+        term.on('data', (data) => {
+          // Pasted data from clipboard will likely contain
+          // LF as EOL chars.
+          data = data.replace(/\n/g, '\r');
+          ws.send(data);
+        });
 
-      term.focus();
-      term.element.focus();
-      term.write('\x1b[31mWelcome to EduBlocks!\x1b[m\r\n');
+        term.on('title', (title) => {
+          document.title = title;
+        });
+
+        term.focus();
+        term.element.focus();
+      }
 
       // The default login password for the terminal
       ws.send(`${WebReplPassword}\r`);
+
+      eventHandlers.open();
 
       ws.onmessage = (event) => {
         if (event.data instanceof ArrayBuffer) {
@@ -160,7 +185,11 @@ function micropythonWs(term: Terminal): MicropythonWs {
 
                 updateFileStatus(`Got ${getFileName}, ${getFileData.length} bytes`);
 
-                saveAs(new Blob([getFileData], { type: 'application/octet-stream' }), getFileName);
+                if (getFileHandler) {
+                  getFileHandler(new Blob([getFileData], { type: 'application/octet-stream' }));
+
+                  getFileHandler = null;
+                }
               } else {
                 updateFileStatus(`Failed getting ${getFileName}`);
               }
@@ -176,9 +205,42 @@ function micropythonWs(term: Terminal): MicropythonWs {
 
               break;
           }
+
+          return;
         }
 
-        term.write(event.data);
+        const result: string = event.data;
+
+        // console.log(`[${result}]`, result.charCodeAt(0));
+
+        if (!jsonHandler && term) {
+          term.write(result);
+        }
+
+        // Data is send one character at a time
+        receiveBuffer += result;
+
+        // Only when we receive a new line character do we have a complete JSON message
+        while (receiveBuffer.indexOf('\n') !== -1) {
+          const [line, ...remaining] = receiveBuffer.split('\n');
+
+          eventHandlers.line(line);
+
+          receiveBuffer = remaining.join('\n');
+
+          // Crude but effective...
+          const isJson = line[0] === '[' || line[0] === '{';
+
+          if (isJson && jsonHandler) {
+            try {
+              jsonHandler(JSON.parse(line));
+            } catch (e) {
+              console.error('Failed to parse JSON', line, e);
+            }
+
+            jsonHandler = null;
+          }
+        }
       };
     };
 
@@ -193,14 +255,16 @@ function micropythonWs(term: Terminal): MicropythonWs {
     };
   }
 
-  function runCode(data: string) {
-    data = `${data.replace(/\n/g, '\r')}\r\r\r`;
+  function send(data: string) {
+    data = `${data.replace(/\n/g, '\r')}`;
 
     try {
       ws.send(data);
 
-      term.focus();
-      term.element.focus();
+      if (term) {
+        term.focus();
+        term.element.focus();
+      }
     } catch (e) {
       if (e instanceof DOMException) {
         alert('I could not connect to the ESP8266. :-(');
@@ -275,15 +339,24 @@ function micropythonWs(term: Terminal): MicropythonWs {
   }
 
   function getFile(src_fname: string) {
-    // WEBREPL_FILE = "<2sBBQLH64s"
-    const rec = getRequestRecord(RT_GetFile, undefined, src_fname);
+    return new Promise<Blob>((resolve, reject) => {
+      if (getFileHandler) {
+        return reject(new Error('A file transfer is already in progress'));
+      }
 
-    // initiate get
-    binaryState = BM_FirstResponseForGet;
-    getFileName = src_fname;
-    getFileData = new Uint8Array(0);
-    updateFileStatus(`Getting ${getFileName}...`);
-    ws.send(rec);
+      getFileHandler = resolve;
+
+      // WEBREPL_FILE = "<2sBBQLH64s"
+      const rec = getRequestRecord(RT_GetFile, undefined, src_fname);
+
+      // initiate get
+      binaryState = BM_FirstResponseForGet;
+      getFileName = src_fname;
+      getFileData = new Uint8Array(0);
+      updateFileStatus(`Getting ${getFileName}...`);
+
+      return ws.send(rec);
+    });
   }
 
   function getVer() {
@@ -307,11 +380,44 @@ function micropythonWs(term: Terminal): MicropythonWs {
     reader.readAsArrayBuffer(f);
   }
 
+  function scanNetworks(): Promise<string[]> {
+    return new Promise<string[]>((resolve) => {
+      const python = `
+import network
+import json
+sta_if = network.WLAN(network.STA_IF); sta_if.active(True)
+networks = sta_if.scan()
+network_names = [network[0] for network in networks]
+print(json.dumps(network_names))
+`;
+
+      jsonHandler = (json) => Array.isArray(json) ? resolve(json) : [];
+
+      send(python);
+    });
+  }
+
+  function listFiles(): Promise<string[]> {
+    return new Promise<string[]>((resolve) => {
+      const python = `
+import json
+print(json.dumps(os.listdir()))
+`;
+
+      jsonHandler = (json) => Array.isArray(json) ? resolve(json) : [];
+
+      send(python);
+    });
+  }
+
   return {
     connect,
-    send: runCode,
+    send,
     getVer,
     sendFile,
     getFile,
+    scanNetworks,
+    listFiles,
+    on,
   };
 }
