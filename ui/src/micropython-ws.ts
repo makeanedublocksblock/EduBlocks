@@ -25,7 +25,7 @@ interface Events {
 
 interface MicropythonWs {
   connect(url: string): void;
-  send(data: string): void;
+  runCode(code: string): void;
 
   getVer(): void;
   sendFile(f: File): void;
@@ -274,6 +274,10 @@ function micropythonWs(term?: Terminal): MicropythonWs {
     }
   }
 
+  function runCode(code: string) {
+    send(`\r${code}\r\r\r`);
+  }
+
   function decodeResponse(data: Uint8Array) {
     if (data[0] === 'W'.charCodeAt(0) && data[1] === 'B'.charCodeAt(0)) {
       const code = data[2] | data[3] << 8;
@@ -412,7 +416,7 @@ print(json.dumps(os.listdir()))
 
   return {
     connect,
-    send,
+    runCode,
     getVer,
     sendFile,
     getFile,

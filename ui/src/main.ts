@@ -217,7 +217,7 @@ function main() {
 
     const code = Blockly.Python.workspaceToCode();
 
-    ws.send(code);
+    ws.runCode(code);
   }
 
   function getHost() {
