@@ -24,6 +24,8 @@ interface Events {
 }
 
 interface MicropythonWs {
+  setTerminal(term: TerminalInterface): void;
+
   connect(url: string): void;
   runCode(code: string): void;
 
@@ -31,13 +33,17 @@ interface MicropythonWs {
   sendFile(f: File): void;
   getFile(src_fname: string): Promise<Blob>;
 
+  sendFileAsText(file: string, text: string): void;
+  getFileAsText(src_fname: string): Promise<string>;
+
   scanNetworks(): Promise<string[]>;
   listFiles(): Promise<string[]>;
 
   on<K extends keyof Events>(eventType: K, handler: Events[K]): void;
 }
 
-function micropythonWs(term?: Terminal): MicropythonWs {
+export default function micropythonWs(): MicropythonWs {
+  let term: TerminalInterface | null = null;
   let ws: WebSocket;
   let connected = false;
 
@@ -51,6 +57,33 @@ function micropythonWs(term?: Terminal): MicropythonWs {
   // Oneshot handlers called in WS receive
   let getFileHandler: ((blob: Blob) => void) | null = null;
   let jsonHandler: ((json: object | any[]) => void) | null = null;
+
+  function setTerminal(t: TerminalInterface) {
+    term = t;
+
+    // term.removeAllListeners('data');
+
+    // term.on('data', (data) => {
+    //   // Pasted data from clipboard will likely contain
+    //   // LF as EOL chars.
+    //   data = data.replace(/\n/g, '\r');
+    //   ws.send(data);
+    // });
+
+    // term.on('title', (title) => {
+    //   document.title = title;
+    // });
+
+    term.onData((data) => {
+      // Pasted data from clipboard will likely contain
+      // LF as EOL chars.
+      data = data.replace(/\n/g, '\r');
+      ws.send(data);
+    });
+
+    term.focus();
+    // term.element.focus();
+  }
 
   const eventHandlers: Events = {
     'open': () => void 0,
@@ -77,24 +110,6 @@ function micropythonWs(term?: Terminal): MicropythonWs {
     ws.onopen = () => {
       let receiveBuffer = '';
 
-      if (term) {
-        term.removeAllListeners('data');
-
-        term.on('data', (data) => {
-          // Pasted data from clipboard will likely contain
-          // LF as EOL chars.
-          data = data.replace(/\n/g, '\r');
-          ws.send(data);
-        });
-
-        term.on('title', (title) => {
-          document.title = title;
-        });
-
-        term.focus();
-        term.element.focus();
-      }
-
       // The default login password for the terminal
       ws.send(`${WebReplPassword}\r`);
 
@@ -108,7 +123,7 @@ function micropythonWs(term?: Terminal): MicropythonWs {
             case BM_FirstResponseForPut:
               // first response for put
               if (decodeResponse(data) === 0) {
-                if (!putFileData) throw new Error('put_file_data is empty');
+                if (!putFileData) { throw new Error('put_file_data is empty'); }
 
                 // send file data in chunks
                 for (let offset = 0; offset < putFileData.length; offset += 1024) {
@@ -123,7 +138,7 @@ function micropythonWs(term?: Terminal): MicropythonWs {
             case BM_FinalResponseForPut:
               // final response for put
               if (decodeResponse(data) === 0) {
-                if (!putFileData) throw new Error('put_file_data is empty');
+                if (!putFileData) { throw new Error('put_file_data is empty'); }
 
                 updateFileStatus(`Sent ${putFileName}, ${putFileData.length} bytes`);
               } else {
@@ -155,7 +170,7 @@ function micropythonWs(term?: Terminal): MicropythonWs {
                   // end of file
                   binaryState = BM_FinalResponseForGet;
                 } else {
-                  if (!getFileData) throw new Error('get_file_data is empty');
+                  if (!getFileData) { throw new Error('get_file_data is empty'); }
 
                   // accumulate incoming data to get_file_data
                   const new_buf = new Uint8Array(getFileData.length + sz);
@@ -180,8 +195,8 @@ function micropythonWs(term?: Terminal): MicropythonWs {
             case BM_FinalResponseForGet:
               // final response
               if (decodeResponse(data) === 0) {
-                if (!getFileName) throw new Error('get_file_name is empty');
-                if (!getFileData) throw new Error('get_file_data is empty');
+                if (!getFileName) { throw new Error('get_file_name is empty'); }
+                if (!getFileData) { throw new Error('get_file_data is empty'); }
 
                 updateFileStatus(`Got ${getFileName}, ${getFileData.length} bytes`);
 
@@ -263,7 +278,7 @@ function micropythonWs(term?: Terminal): MicropythonWs {
 
       if (term) {
         term.focus();
-        term.element.focus();
+        // term.element.focus();
       }
     } catch (e) {
       if (e instanceof DOMException) {
@@ -328,8 +343,8 @@ function micropythonWs(term?: Terminal): MicropythonWs {
   }
 
   function putFile() {
-    if (!putFileName) throw new Error('put_file_name is empty');
-    if (!putFileData) throw new Error('put_file_data is empty');
+    if (!putFileName) { throw new Error('put_file_name is empty'); }
+    if (!putFileData) { throw new Error('put_file_data is empty'); }
 
     const dest_fname = putFileName;
     const dest_fsize = putFileData.length;
@@ -363,6 +378,19 @@ function micropythonWs(term?: Terminal): MicropythonWs {
     });
   }
 
+  function getFileAsText(src_fname: string) {
+    return getFile(src_fname).then((blob) => {
+      return new Promise<string>((resolve) => {
+        const reader = new FileReader();
+        reader.onload = function (e) {
+          const contents = (e.target as any).result;
+          resolve(contents);
+        };
+        reader.readAsText(blob);
+      });
+    });
+  }
+
   function getVer() {
     const rec = getRequestRecord(RT_GetVer);
 
@@ -382,6 +410,20 @@ function micropythonWs(term?: Terminal): MicropythonWs {
       putFile();
     };
     reader.readAsArrayBuffer(f);
+  }
+
+  function sendFileAsText(file: string, text: string) {
+    putFileName = file;
+
+    const blob = new Blob([text], { type: 'text/plain' });
+
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      putFileData = new Uint8Array((e.target as any).result);
+
+      putFile();
+    };
+    reader.readAsArrayBuffer(blob);
   }
 
   function scanNetworks(): Promise<string[]> {
@@ -415,11 +457,14 @@ print(json.dumps(os.listdir()))
   }
 
   return {
+    setTerminal,
     connect,
     runCode,
     getVer,
     sendFile,
+    sendFileAsText,
     getFile,
+    getFileAsText,
     scanNetworks,
     listFiles,
     on,

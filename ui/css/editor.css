@@ -1,0 +1,92 @@
+body {
+  height: auto;
+}
+
+#page {
+  height: 100%;
+  width: 100%;
+}
+
+button {
+  margin: 0;
+}
+
+.filename {
+  font-weight: normal;
+  font-family: Courier New, Courier, monospace;
+  margin-left: 20px;
+}
+
+.file {
+  display: none;
+}
+
+#workspace {
+  height: calc(100vh - 3em);
+  position: relative;
+  margin-top: 3em;
+}
+
+#toggleViewButton {
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: 10;
+  opacity: 0.75;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+  background: #fff;
+  color: #000;
+  /*border-left: solid 2px #aaa;
+  border-bottom: solid 2px #aaa;*/
+  text-transform: capitalize;
+  box-shadow: 0 0 5px rgba(0,0,0,0.75);
+}
+#toggleViewButton:focus {
+  outline: none;
+}
+#toggleViewButton:hover {
+  background: #ccc;
+}
+
+#blockly {
+  width: 100%;
+  height: 100%;
+  background-color: #ff0066;
+}
+
+#python {
+  white-space: pre;
+  font-family: Courier New, Courier, monospace;
+  font-size: 20px;
+  line-height: 28px;
+  padding: 10px;
+  background: #e7e7e7;
+  border-top: solid 1px #000;
+  border-bottom: solid 1px #000;
+}
+
+#editor {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+}
+
+#terminal-dialog {
+  position: fixed;
+  z-index: 10001;
+  left: 20px;
+  top: 20px;
+  right: 20px;
+  bottom: 20px;
+  border: solid 1px #000;
+  line-height: 20px;
+}
+
+#term {
+  height: 100%;
+  background: #333;
+}

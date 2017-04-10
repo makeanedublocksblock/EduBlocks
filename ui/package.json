@@ -4,8 +4,8 @@
   "description": "A minimal Electron application",
   "main": "main.js",
   "scripts": {
-    "compile": "tsc",
-    "watch": "tsc --watch",
+    "compile": "tsc && browserify src/main.js -o build/main.js",
+    "watch": "tsc --watch & watchify src/main.js -o build/main.js",
     "start": "electron .",
     "inline": "http-server -p 8765 & inliner http://localhost:8765/ | gzip > build/webrepl-inlined.html.gz",
     "lint": "tslint src/**/*.ts"
@@ -23,10 +23,16 @@
   "devDependencies": {
     "@types/es6-promise": "0.0.32",
     "@types/lodash": "^4.14.62",
+    "browserify": "^14.3.0",
     "http-server": "^0.9.0",
     "inliner": "^1.11.0",
     "tslint": "^5.0.0",
-    "typescript": "^2.2.2"
+    "typescript": "^2.2.2",
+    "watchify": "^3.9.0"
   },
-  "dependencies": {}
+  "dependencies": {
+    "lodash": "^4.17.4",
+    "picnic": "^6.3.2",
+    "preact": "^8.1.0"
+  }
 }

@@ -9,10 +9,11 @@
   <title>EduBlocks</title>
   <link rel="shortcut icon" href="logo.png" type="image/x-icon">
 
-  <!-- Page styles -->
-  <link rel="stylesheet" href="editor.css">
+  <link rel="stylesheet" href="fonts/icons/css/fontello.css">
+  <link rel="stylesheet" href="node_modules/picnic/picnic.min.css">
 
-  <script src="lib/lodash.core.min.js"></script>
+  <!-- Page styles -->
+  <link rel="stylesheet" href="css/editor.css">
 
   <!-- The main Blockly files -->
   <script src="blockly/blockly_compressed.js"></script>
@@ -28,41 +29,12 @@
   <script src="lib/FileSaver.js"></script>
   <script src="lib/term.js"></script>
 
-  <script src="src/io.js"></script>
-  <script src="src/micropython-ws.js"></script>
-  <script src="src/main.js"></script>
+  <script src="build/main.js"></script>
 </head>
 
 <body>
   <div id="page">
-    <header>
-      <img src="logo.png" />
-
-      <h1>EduBlocks</h1>
-
-      <nav>
-        <a id="block" title="Change to Block View" href="javascript:void(0)" onclick="changeTab('blockly')">Block View</a>
-        <a id="block1" title="Change to Python View" href="javascript:void(0)" onclick="showPython()">Python View</a>
-        <a id="blockz1" title="Download Python Source Code" href="javascript:void(0)" onclick="downloadPython()">Python Download</a>
-        <a id="block2" title="Open a file" href="javascript:void(0)" onclick="openCode()">Open</a>
-        <a id="block3" title="Save a file" href="javascript:void(0)" onclick="saveCode()">Save</a>
-        <a id="block4" title="Run your code" href="javascript:void(0)" onclick="sendCode()">Run</a>
-      </nav>
-    </header>
-
-    <section>
-      <div id="blockly"></div>
-
-      <div id="python" style="display: none">
-        <div id="editor"></div>
-      </div>
-    </section>
-  </div>
-
-  <div id="terminal-dialog" class="terminal-dialog">
-    <div class="terminal-output" id="term">
-      <!--<textarea id="term" disabled="disabled"></textarea>-->
-    </div>
+    <!-- React -->
   </div>
 
   <!-- The Blockly toolbox, which is where blocks are dragged out from. If you

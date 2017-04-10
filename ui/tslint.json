@@ -61,6 +61,7 @@
             }
         ],
         "object-literal-shorthand": true,
-        "arrow-parens": true
+        "arrow-parens": true,
+        "curly": true
     }
 }

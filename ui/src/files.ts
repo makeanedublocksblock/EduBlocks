@@ -1,3 +1,5 @@
+import micropythonWs from './micropython-ws';
+
 function files() {
   const ws = initWebsocket();
 
@@ -24,7 +26,7 @@ function files() {
   function getElementByIdSafe(id: string): HTMLElement {
     const element = document.getElementById(id);
 
-    if (!element) throw new Error(`Could not find element with "${id}"`);
+    if (!element) { throw new Error(`Could not find element with "${id}"`); }
 
     return element;
   }
@@ -45,7 +47,9 @@ function files() {
 }
 
 window.addEventListener('load', () => {
-  const functions = files();
+  files();
+
+  // const functions = files();
 
   // _.extend(window, functions);
 });

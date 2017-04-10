@@ -1,0 +1,7 @@
+
+.icon-play:before { content: '\e800'; } /* '' */
+.icon-stop:before { content: '\e801'; } /* '' */
+.icon-pause:before { content: '\e802'; } /* '' */
+.icon-floppy:before { content: '\e803'; } /* '' */
+.icon-folder-open:before { content: '\e804'; } /* '' */
+.icon-folder-open-empty:before { content: '\f115'; } /* '' */
