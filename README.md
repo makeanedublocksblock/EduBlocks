@@ -7,5 +7,7 @@ EduBlocks is a visual block based programming tool that will hopefully help teac
 ![alt tag](screenshot.png)
 EduBlocks features:
 * A Block Format:
-  Easy and simple interface that uses a building block format to code.
+Easy and simple interface that uses a building block format to code.
+* A Block Format:
+Easy and simple interface that uses a building block format to code.
 
