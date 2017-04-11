@@ -206,6 +206,29 @@ Blockly.Python['define'] = function(block) {
   return code;
 };
 
+Blockly.Python['liveloop'] = function(block) {
+  var branch = Blockly.Python.statementToCode(block, 'DO');
+  branch = Blockly.Python.addLoopTrap(branch, block.id) ||
+      Blockly.Python.PASS;
+  var dropdown_num = block.getFieldValue('num');
+  var statements_do = Blockly.Python.statementToCode(block, 'DO');
+  // TODO: Assemble Python into code variable.
+  var code = 'def live_loop_' +dropdown_num+ '():\n' + branch;
+  return code;
+};
+
+Blockly.Python['for'] = function(block) {
+  var branch = Blockly.Python.statementToCode(block, 'DO');
+  branch = Blockly.Python.addLoopTrap(branch, block.id) ||
+      Blockly.Python.PASS;
+  var text_letter = block.getFieldValue('letter');
+  var text_no = block.getFieldValue('no');
+  var statements_name = Blockly.Python.statementToCode(block, 'DO');
+  // TODO: Assemble Python into code variable.
+  var code = 'for ' +text_letter+ ' in range(' +text_no+ '):\n' +branch;
+  return code;
+};
+
 Blockly.Python['greater'] = function(block) {
   var text_1 = block.getFieldValue('1');
   var text_v = block.getFieldValue('v');

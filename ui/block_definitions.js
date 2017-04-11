@@ -35,6 +35,8 @@ Blockly.Blocks['df'] = {
   }
 };
 
+
+
 Blockly.Blocks['play'] = {
   init: function() {
     this.appendDummyInput()
@@ -46,6 +48,24 @@ Blockly.Blocks['play'] = {
     this.setColour(180);
     this.setTooltip('Play a single note');
     this.setHelpUrl('');
+  }
+};
+
+Blockly.Blocks['for'] = {
+  init: function() {
+    this.appendDummyInput()
+        .appendField("for")
+        .appendField(new Blockly.FieldTextInput("i"), "letter")
+        .appendField("in range(")
+        .appendField(new Blockly.FieldTextInput("number"), "no")
+        .appendField("):");
+    this.appendStatementInput("DO")
+        .setCheck(null);
+    this.setPreviousStatement(true, null);
+    this.setNextStatement(true, null);
+    this.setColour(336);
+    this.setTooltip('');
+    this.setHelpUrl('Create a for loop');
   }
 };
 
@@ -415,6 +435,21 @@ Blockly.Blocks['define'] = {
     this.setColour(336)
     this.setTooltip('');
     this.setHelpUrl('http://www.example.com/');
+  }
+};
+
+Blockly.Blocks['liveloop'] = {
+  init: function() {
+    this.appendDummyInput()
+        .appendField("live_loop_")
+        .appendField(new Blockly.FieldDropdown([["1","1"], ["2","2"], ["3","3"], ["4","4"]]), "num");
+    this.appendStatementInput("DO")
+        .setCheck(null);
+    this.setPreviousStatement(true, null);
+    this.setNextStatement(true, null);
+    this.setColour(180);
+    this.setTooltip('Create a live loop with Sonic Pi');
+    this.setHelpUrl('');
   }
 };
 

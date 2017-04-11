@@ -12,48 +12,48 @@ import random
 from psonic import *
 from threading import Thread, Condition, Event
 
-def live_1():
+def live_loop_1():
     pass
 
-def live_2():
+def live_loop_2():
     pass
 
-def live_3():
+def live_loop_3():
     pass
 
-def live_4():
+def live_loop_4():
     pass
 
-def live_loop_1(condition,stop_event):
+def live_loop_1a(condition,stop_event):
     while not stop_event.is_set():
         with condition:
             condition.notifyAll() #Message to threads
-        live_1()
+        live_loop_1()
 
-def live_loop_2(condition,stop_event):
+def live_loop_2a(condition,stop_event):
     while not stop_event.is_set():
         with condition:
             condition.wait() #Wait for message
-        live_2()
+        live_loop_2()
 
-def live_loop_3(condition,stop_event):
+def live_loop_3a(condition,stop_event):
     while not stop_event.is_set():
         with condition:
             condition.wait() #Wait for message
-        live_3()
+        live_loop_3()
 
-def live_loop_4(condition,stop_event):
+def live_loop_4a(condition,stop_event):
     while not stop_event.is_set():
         with condition:
             condition.wait() #Wait for message
-        live_4()
+        live_loop_4()
 
 condition = Condition()
 stop_event = Event()
-live_thread_1 = Thread(name='producer', target=live_loop_1, args=(condition,stop_event))
-live_thread_2 = Thread(name='consumer1', target=live_loop_2, args=(condition,stop_event))
-live_thread_3 = Thread(name='consumer2', target=live_loop_3, args=(condition,stop_event))
-live_thread_4 = Thread(name='consumer3', target=live_loop_3, args=(condition,stop_event))
+live_thread_1 = Thread(name='producer', target=live_loop_1a, args=(condition,stop_event))
+live_thread_2 = Thread(name='consumer1', target=live_loop_2a, args=(condition,stop_event))
+live_thread_3 = Thread(name='consumer2', target=live_loop_3a, args=(condition,stop_event))
+live_thread_4 = Thread(name='consumer3', target=live_loop_4a, args=(condition,stop_event))
 
 live_thread_1.start()
 live_thread_2.start()
