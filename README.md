@@ -17,6 +17,19 @@ EduBlocks has a range of libraies like EduPython, Minecraft & Sonic Pi. (COMING 
 * Python View:
 Once you have coded the blocks, you can easily switch to the Python View to see the real Python code.
 
+Installation
+------------
+Get started with EduBlocks on your Raspberry Pi in these simple steps:
+
+1. Open up a terminal window by clicking on the terminal icon on the top right hand corner of your Raspberry Pi's Screen
+![alt tag](1.png)
+2. Type the following command and then press enter on your keyboard.
+
+```bash
+curl -sSL edu.buz.co | bash
+```
+
+![alt tag](2.png)
 
 
 
