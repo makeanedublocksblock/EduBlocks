@@ -1,4 +1,4 @@
-![alt tag](https://github.com/AllAboutCode/EduBlocks/blob/master/ui/logo.png)
+![alt tag](edublocks-header.png)
 
 EduBlocks
 =========
