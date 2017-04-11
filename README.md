@@ -28,7 +28,44 @@ Get started with EduBlocks on your Raspberry Pi in these simple steps:
 curl -sSL edu.buz.co | bash
 ```
 ![alt tag](2.png)
-3. When promted by the installer, press enter to select <YES> to install.
+3. When promted by the installer, press enter to select YES to install.
 ![alt tag](3.png)
+4. The installer will now run for a few minutes. This depends on your internet speeds.
+![alt tag](4.png)
+5. You will now be able to see EduBlocks in the Raspberry Pi >> Programming menu. Click on the EduBlocks link to run the program.
+![alt tag](5.png)
+6. After around half a minute, you should be able to see the EduBlocks workspace. Happy Coding.
+![alt tag](5.png)
+
+Did this not work for you? Look at the Support section of this document.
+
+Support
+-------
+
+Need help or support with EduBlocks? There are a few ways in which you can get in touch with us. We try our best to provide a speedy and smooth support service for our users. It may take us a few hours to respond as EduBlocks is not our full time jobs/ commitment. Also, it may take a few days/weeks/months before your request is solved.
+
+###Twitter
+
+EduBlocks Support: @edu_blocks
+All About Code: @all_about_code
+
+###Email
+
+Support Email: support@edublocks.org
+Joshua Email: josh@edublocks.org
+Chris (Developer) Email: chris@edublocks.org
+
+###Website
+
+EduBlocks: http://edublocks.org
+All About Code: http://allaboutcode.co.uk
+
+Why GitHub?
+-----------
+
+
+
+
+
 
 
