@@ -1,6 +1,11 @@
 ![alt tag](edublocks-header.png)
 
-EduBlocks
+Welcome to the EduBlocks Github Repository
 =========
 
-Description coming soon!
+EduBlocks is a visual block based programming tool that will hopefully help teachers to introduce text based programming languages, like Python, to children at an earlier age.
+![alt tag](screenshot.png)
+EduBlocks features:
+* A Block Format:
+  Easy and simple interface that uses a building block format to code.
+
